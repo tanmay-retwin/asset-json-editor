@@ -457,4 +457,8 @@ export class JsonEditorComponent implements OnInit {
       .map((np) => `${np.charAt(0).toUpperCase()}${np.slice(1)}`)
       .join(' ');
   }
+
+  useTranslation(fieldKey: string = ''): string {
+    return this.jsonEditorService.useTranslation(fieldKey);
+  }
 }

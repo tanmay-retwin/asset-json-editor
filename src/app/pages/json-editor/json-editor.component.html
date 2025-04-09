@@ -226,7 +226,7 @@
           @for (fieldName of objectKeys(currentFields); track $index) {
           <div class="field-item" [attr.data-field-name]="fieldName">
             <div class="field-header">
-              <h4>{{ fieldName }}</h4>
+              <h4>{{ formatSectionName(fieldName) }}</h4>
               <div class="field-actions">
                 <button class="edit-field-btn" (click)="editField(fieldName)">
                   {{ isEditMode && editingFieldName === fieldName ? "Save" : "Edit" }}

@@ -194,4 +194,8 @@ export class FieldEditorComponent implements OnInit {
       this.updateFieldData();
     }
   }
+
+  useTranslation(fieldKey: string = ""): string {
+    return this.jsonEditorService.useTranslation(fieldKey);
+  }
 }

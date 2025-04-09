@@ -1,9 +1,9 @@
 <div class="field-editor" [ngClass]="fieldData.datatype">
   <div class="field-editor-content">
     <div class="field-label">
-      <span class="display-name">{{ fieldData.field_name || fieldName }}</span>
+      <span class="display-name">{{ useTranslation(fieldData.field_name || fieldName) }}</span>
       @if (fieldData?.units) {
-      <span class="units">({{ fieldData.units }})</span>
+      <span class="units">({{ useTranslation(fieldData.units) }})</span>
       }
       @if (fieldData?.required) {
       <span class="required-badge">Required</span>
@@ -54,7 +54,7 @@
 
     @if (fieldData?.description) {
     <div class="field-description">
-      {{ fieldData.description }}
+      {{ useTranslation(fieldData.description) }}
     </div>
     }
   </div>

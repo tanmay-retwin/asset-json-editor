@@ -1,0 +1,316 @@
+<div class="json-editor-container">
+  <div *ngIf="!fileUploaded" class="file-upload-container">
+    <app-file-upload (fileUploaded)="onFileUploaded($event)"></app-file-upload>
+  </div>
+
+  <div *ngIf="fileUploaded" class="editor-container">
+    <div class="editor-header">
+      <h2>JSON Editor</h2>
+      <div class="editor-actions">
+        <button class="export-btn" (click)="exportJson()">Export JSON</button>
+      </div>
+    </div>
+
+    <div class="editor-content">
+      <div class="sections-sidebar">
+        <div class="sections-header">
+          <h3>Sections</h3>
+          <button class="add-btn" (click)="toggleAddSectionForm()">
+            <span>+</span>
+          </button>
+        </div>
+
+        <div *ngIf="showAddSectionForm" class="add-form">
+          <h3>Add New Section</h3>
+          <form [formGroup]="sectionForm" (ngSubmit)="addNewSection()">
+            <div class="form-group">
+              <label for="sectionName">Section Name</label>
+              <input
+                type="text"
+                id="sectionName"
+                formControlName="sectionName"
+                placeholder="Enter section name"
+              />
+            </div>
+            <div class="form-actions">
+              <button type="button" class="cancel-btn" (click)="toggleAddSectionForm()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="confirm-btn"
+                [disabled]="sectionForm.invalid"
+              >
+                Add Section
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <ul class="sections-list">
+          <li
+            *ngFor="let section of sections"
+            [class.active]="section === activeSection"
+            (click)="selectSection(section)"
+          >
+            {{ section }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="section-content" *ngIf="activeSection">
+        <div class="section-header">
+          <h3>{{ activeSection }}</h3>
+          <div class="section-actions">
+            <button class="add-field-btn" (click)="toggleAddFieldForm()">
+              Add Field
+            </button>
+            <button
+              class="delete-section-btn"
+              (click)="deleteSection()"
+              *ngIf="sections.length > 1"
+            >
+              Delete Section
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="showAddFieldForm" class="add-form add-field-form">
+          <h3>{{ isEditMode ? 'Edit Field' : 'Add New Field' }}</h3>
+          <form [formGroup]="fieldForm" (ngSubmit)="saveField()">
+            <div class="form-group">
+              <label for="fieldName">Field Name</label>
+              <input
+                type="text"
+                id="fieldName"
+                formControlName="fieldName"
+                placeholder="Enter field name (e.g. temperature)"
+                [readonly]="isEditMode"
+                [class.disabled]="isEditMode"
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="fieldType">Field Type</label>
+              <select
+                id="fieldType"
+                formControlName="fieldType"
+              >
+                <option value="text">Text</option>
+                <option value="number">Number</option>
+                <option value="date">Date</option>
+                <option value="boolean">Boolean</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="displayName">Display Name</label>
+              <input
+                type="text"
+                id="displayName"
+                formControlName="displayName"
+                placeholder="Enter display name (e.g. Temperature)"
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea
+                id="description"
+                formControlName="description"
+                placeholder="Enter field description"
+              ></textarea>
+            </div>
+            
+            <div class="form-group" *ngIf="fieldForm.get('fieldType')?.value !== 'boolean'">
+              <label for="units">Units (optional)</label>
+              <input
+                type="text"
+                id="units"
+                formControlName="units"
+                placeholder="Enter units (e.g. °C)"
+              />
+            </div>
+            
+            <div class="form-group" *ngIf="fieldForm.get('fieldType')?.value === 'text'">
+              <div class="checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="isDropdown"
+                  formControlName="isDropdown"
+                />
+                <label for="isDropdown">Make this a dropdown field</label>
+              </div>
+            </div>
+            
+            <div class="dropdown-container" *ngIf="fieldForm.get('isDropdown')?.value">
+              <h4>Dropdown Options</h4>
+              <div class="dropdown-options" formArrayName="dropdownOptions">
+                <div class="dropdown-option" *ngFor="let option of dropdownOptions.controls; let i = index">
+                  <input
+                    type="text"
+                    [formControlName]="i"
+                    placeholder="Enter option value"
+                  />
+                  <button type="button" class="remove-option" (click)="removeDropdownOption(i)" *ngIf="dropdownOptions.length > 1">×</button>
+                </div>
+                <button type="button" class="add-option" (click)="addDropdownOption()">+ Add Option</button>
+              </div>
+            </div>
+            
+            <!-- Number field limits -->
+            <div class="limits-container" *ngIf="fieldForm.get('fieldType')?.value === 'number'">
+              <h4>Number Limits (optional)</h4>
+              <div class="form-row">
+                <div class="form-group half-width">
+                  <label for="minValue">Minimum Value</label>
+                  <input
+                    type="number"
+                    id="minValue"
+                    formControlName="minValue"
+                    placeholder="Min value"
+                  />
+                </div>
+                <div class="form-group half-width">
+                  <label for="maxValue">Maximum Value</label>
+                  <input
+                    type="number"
+                    id="maxValue"
+                    formControlName="maxValue"
+                    placeholder="Max value"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <!-- Date field limits -->
+            <div class="limits-container" *ngIf="fieldForm.get('fieldType')?.value === 'date'">
+              <h4>Date Limits (optional)</h4>
+              <div class="form-row">
+                <div class="form-group half-width">
+                  <label for="minDate">Minimum Date</label>
+                  <input
+                    type="date"
+                    id="minDate"
+                    formControlName="minDate"
+                  />
+                </div>
+                <div class="form-group half-width">
+                  <label for="maxDate">Maximum Date</label>
+                  <input
+                    type="date"
+                    id="maxDate"
+                    formControlName="maxDate"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="defaultValue">Default Value</label>
+              <ng-container [ngSwitch]="fieldForm.get('fieldType')?.value">
+                <input 
+                  *ngSwitchCase="'text'" 
+                  [ngStyle]="{display: fieldForm.get('isDropdown')?.value ? 'none' : 'block'}" 
+                  type="text" 
+                  id="defaultValue" 
+                  formControlName="defaultValue" 
+                  placeholder="Enter default value"
+                />
+                <select 
+                  *ngSwitchCase="'text'" 
+                  [ngStyle]="{display: fieldForm.get('isDropdown')?.value ? 'block' : 'none'}" 
+                  id="defaultValue" 
+                  formControlName="defaultValue"
+                >
+                  <option value="">Select a default option</option>
+                  <ng-container *ngFor="let option of dropdownOptions.controls; let i = index">
+                    <option [ngValue]="option.value">{{ option.value }}</option>
+                  </ng-container>
+                </select>
+                <input 
+                  *ngSwitchCase="'number'" 
+                  type="number" 
+                  id="defaultValue" 
+                  formControlName="defaultValue" 
+                  placeholder="Enter default value"
+                />
+                <input 
+                  *ngSwitchCase="'date'" 
+                  type="date" 
+                  id="defaultValue" 
+                  formControlName="defaultValue"
+                />
+                <div class="checkbox-wrapper" *ngSwitchCase="'boolean'">
+                  <input 
+                    type="checkbox" 
+                    id="defaultValue" 
+                    formControlName="defaultValue"
+                  />
+                  <label for="defaultValue">Default Value</label>
+                </div>
+              </ng-container>
+            </div>
+            
+            <div class="form-group">
+              <div class="checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  id="isRequired"
+                  formControlName="isRequired"
+                />
+                <label for="isRequired">Required Field</label>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="cancel-btn" (click)="toggleAddFieldForm()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="confirm-btn"
+                [disabled]="fieldForm.invalid"
+              >
+                {{ isEditMode ? 'Update Field' : 'Add Field' }}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="fields-container">
+          <div
+            class="field-item"
+            *ngFor="let fieldName of objectKeys(currentFields)"
+            [attr.data-field-name]="fieldName"
+          >
+            <div class="field-header">
+              <h4>{{ fieldName }}</h4>
+              <div class="field-actions">
+                <button
+                  class="edit-field-btn"
+                  (click)="editField(fieldName)"
+                >
+                  Edit
+                </button>
+                <button
+                  class="delete-field-btn"
+                  (click)="deleteField(fieldName)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+            <app-field-editor
+              [field]="currentFields[fieldName]"
+              [fieldName]="fieldName"
+              [section]="activeSection"
+              [subsection]="null"
+              [isEditing]="isEditMode && editingFieldName === fieldName"
+            ></app-field-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,263 @@
+.file-upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  // background-color: white;
+}
+
+.card {
+  width: 100%;
+  max-width: 600px;
+  // background-color: whi/te;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid #f3f4f6;
+
+  h2 {
+    margin: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .subtitle {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.875rem;
+  }
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+.upload-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.2s;
+  background-color: #f9fafb;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    border-color: #8E67FD;
+    background-color: rgba(99, 102, 241, 0.05);
+  }
+
+  .upload-icon {
+    margin-bottom: 1rem;
+
+    svg {
+      fill: #9ca3af;
+    }
+  }
+
+  .upload-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    p {
+      margin: 0;
+      font-weight: 500;
+      color: #4b5563;
+    }
+
+    span {
+      color: #9ca3af;
+      font-size: 0.875rem;
+    }
+
+    .upload-button {
+      padding: 0.5rem 1rem;
+      background-color: #8E67FD;
+      color: white;
+      border-radius: 0.25rem;
+      font-weight: 500;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 0.5rem;
+
+      &:hover {
+        background-color: #8E67FD;
+      }
+
+      input {
+        display: none;
+      } 
+      
+      span {
+        color: white;
+      }
+    }
+  }
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+  color: #9ca3af;
+  font-size: 0.875rem;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: #e5e7eb;
+  }
+
+  span {
+    padding: 0 1rem;
+  }
+}
+
+.sample-data {
+  display: flex;
+  justify-content: center;
+
+  .sample-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: white;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    svg {
+      fill: #6b7280;
+    }
+
+    &:hover {
+      border-color: #8E67FD;
+      color: #8E67FD;
+      background-color: rgba(99, 102, 241, 0.05);
+
+      svg {
+        fill: #8E67FD;
+      }
+    }
+  }
+}
+
+.card-footer {
+  padding: 1rem 1.5rem;
+  background-color: #f9fafb;
+  border-top: 1px solid #f3f4f6;
+  text-align: center;
+
+  p {
+    margin: 0.25rem 0;
+    color: #6b7280;
+    font-size: 0.75rem;
+  }
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(99, 102, 241, 0.3);
+    border-radius: 50%;
+    border-top-color: #8E67FD;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: #4b5563;
+    font-weight: 500;
+  }
+}
+
+.error-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+
+  .error-content {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    svg {
+      fill: #ef4444;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #1f2937;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 0.25rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #dc2626;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -9,10 +9,8 @@
   height: 100%;
   background-color: #f8f9fa;
   font-family: 'Roboto', Arial, sans-serif;
-  max-width: 100%;
+  min-width: 100vw;
   overflow-x: hidden;
-
-  // border: 1px solid red;
 }
 
 .upload-screen {
@@ -43,10 +41,10 @@
   padding: 1rem 1.5rem;
   background-color: #ffffff;
   border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
 
-  
+
   h2 {
     margin: 0;
     font-size: 1rem;
@@ -58,11 +56,11 @@
     font-size: 0.6rem;
     font-weight: 400;
   }
-  
+
   .editor-actions {
     display: flex;
     gap: 1rem;
-    
+
     .export-btn {
       padding: 0.5rem 1rem;
       background-color: #4CAF50;
@@ -72,7 +70,7 @@
       font-weight: 500;
       cursor: pointer;
       transition: background-color 0.2s;
-      
+
       &:hover {
         background-color: #45a049;
       }
@@ -87,44 +85,44 @@
   overflow: hidden;
   background-color: #ffffff;
   border-radius: 0 0 1rem 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
   @media (max-width: 768px) {
     flex-direction: column;
     height: auto;
     min-height: 500px;
   }
-  
+
   .sections-sidebar {
     width: 250px;
     border-right: 1px solid #e2e8f0;
     background-color: #f8f9fa;
     overflow-y: auto;
-    
+
     @media (max-width: 1200px) {
       width: 200px;
     }
-    
+
     @media (max-width: 768px) {
       width: 100%;
       border-right: none;
       border-bottom: 1px solid #e2e8f0;
       max-height: 200px;
     }
-    
+
     .sections-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1rem;
       border-bottom: 1px solid #e2e8f0;
-      
+
       h3 {
         margin: 0;
         font-weight: 600;
         font-size: 1.2rem;
       }
-      
+
       .add-btn {
         width: 28px;
         height: 28px;
@@ -137,36 +135,36 @@
         border: none;
         cursor: pointer;
         transition: background-color 0.2s;
-        
+
         &:hover {
           background-color: #4F46E5;
         }
-        
+
         span {
           font-size: 1.2rem;
           line-height: 1;
         }
       }
     }
-    
+
     .sections-list {
       list-style: none;
       padding: 0;
       margin: 0;
-      
+
       @media (max-width: 768px) {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
         padding: 0.5rem;
       }
-      
+
       li {
         padding: 0.75rem 1rem;
         border-bottom: 1px solid #e2e8f0;
         cursor: pointer;
         transition: background-color 0.2s;
-        
+
         @media (max-width: 768px) {
           padding: 0.5rem 0.75rem;
           border: 1px solid #e2e8f0;
@@ -175,17 +173,17 @@
           text-align: center;
           border-bottom-width: 1px;
         }
-        
+
         &:hover {
           background-color: #edf2f7;
         }
-        
+
         &.active {
           background-color: #e6e6ff;
           color: #4F46E5;
           font-weight: 500;
           border-left: 3px solid #4F46E5;
-          
+
           @media (max-width: 768px) {
             border-left-width: 1px;
             border-bottom: 3px solid #4F46E5;
@@ -194,23 +192,23 @@
       }
     }
   }
-  
+
   .section-content {
     flex: 1;
     padding: 1rem;
     overflow-y: auto;
     background-color: #ffffff;
     border-radius: 0 0 8px 0;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.03);
-    
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.03);
+
     @media (max-width: 1200px) {
       padding: 0.75rem;
     }
-    
+
     @media (max-width: 768px) {
       padding: 0.5rem;
     }
-    
+
     .section-header {
       display: flex;
       justify-content: space-between;
@@ -218,33 +216,33 @@
       margin-bottom: 1.5rem;
       padding-bottom: 0.75rem;
       border-bottom: 2px solid #e2e8f0;
-      
+
       @media (max-width: 768px) {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.75rem;
       }
-      
+
       h3 {
         margin: 0;
         font-size: 1.3rem;
         font-weight: 600;
         color: #333;
       }
-      
+
       .section-actions {
         display: flex;
         gap: 0.75rem;
-        
+
         @media (max-width: 576px) {
           flex-direction: column;
           width: 100%;
-          
+
           button {
             width: 100%;
           }
         }
-        
+
         button {
           padding: 0.5rem 1rem;
           border-radius: 4px;
@@ -252,20 +250,20 @@
           cursor: pointer;
           transition: all 0.2s;
           border: none;
-          
+
           &.add-field-btn {
             background-color: #6366F1;
             color: white;
-            
+
             &:hover {
               background-color: #4F46E5;
             }
           }
-          
+
           &.delete-section-btn {
             background-color: #f8d7da;
             color: #721c24;
-            
+
             &:hover {
               background-color: #f5c6cb;
             }
@@ -273,26 +271,26 @@
         }
       }
     }
-    
+
     .fields-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1rem;
-      
+
       @media (max-width: 576px) {
         grid-template-columns: 1fr;
       }
-      
+
       .field-item {
         border: 1px solid #e2e8f0;
         border-radius: 8px;
         padding: 1.25rem;
         background-color: #ffffff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         transition: all 0.2s ease;
         position: relative;
         overflow: hidden;
-        
+
         &::before {
           content: '';
           position: absolute;
@@ -303,12 +301,12 @@
           background-color: #6366F1;
           opacity: 0.7;
         }
-        
+
         &:hover {
-          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
           transform: translateY(-2px);
         }
-        
+
         .field-header {
           display: flex;
           justify-content: space-between;
@@ -316,24 +314,24 @@
           margin-bottom: 1rem;
           padding-bottom: 0.75rem;
           border-bottom: 1px solid #f0f0f0;
-          
+
           @media (max-width: 400px) {
             flex-direction: column;
             align-items: flex-start;
             gap: 0.5rem;
           }
-          
+
           h4 {
             margin: 0;
             font-weight: 600;
             color: #333;
             font-size: 1.1rem;
           }
-          
+
           .field-actions {
             display: flex;
             gap: 0.5rem;
-            
+
             button {
               padding: 0.25rem 0.75rem;
               font-size: 0.85rem;
@@ -342,20 +340,20 @@
               border: none;
               font-weight: 500;
               transition: all 0.15s ease;
-              
+
               &.edit-field-btn {
                 background-color: #eef2ff;
                 color: #4338ca;
-                
+
                 &:hover {
                   background-color: #e0e7ff;
                 }
               }
-              
+
               &.delete-field-btn {
                 background-color: #fef2f2;
                 color: #dc2626;
-                
+
                 &:hover {
                   background-color: #fee2e2;
                 }
@@ -363,25 +361,25 @@
             }
           }
         }
-        
+
         app-field-editor {
           display: block;
           width: 100%;
         }
       }
     }
-    
+
     .add-form {
       background-color: white;
       border-radius: 8px;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
       @media (max-width: 768px) {
         padding: 1rem;
       }
-      
+
       h3 {
         margin-top: 0;
         margin-bottom: 1.5rem;
@@ -389,51 +387,53 @@
         font-weight: 600;
         color: #333;
       }
-      
+
       .form-group {
         margin-bottom: 1rem;
-        
+
         label {
           display: block;
           margin-bottom: 0.5rem;
           font-weight: 500;
           color: #4a5568;
         }
-        
-        input, select, textarea {
+
+        input,
+        select,
+        textarea {
           width: 100%;
           padding: 0.75rem;
           border: 1px solid #e2e8f0;
           border-radius: 4px;
           font-size: 1rem;
-          
+
           &:focus {
             outline: none;
             border-color: #6366F1;
             box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
           }
         }
-        
+
         textarea {
           min-height: 100px;
           resize: vertical;
         }
       }
-      
+
       .form-actions {
         display: flex;
         justify-content: flex-end;
         gap: 1rem;
         margin-top: 1.5rem;
-        
+
         @media (max-width: 576px) {
           flex-direction: column;
-          
+
           button {
             width: 100%;
           }
         }
-        
+
         button {
           padding: 0.5rem 1.5rem;
           border-radius: 4px;
@@ -441,25 +441,25 @@
           cursor: pointer;
           transition: all 0.2s;
           border: none;
-          
+
           &.cancel-btn {
             background-color: #e2e8f0;
             color: #4a5568;
-            
+
             &:hover {
               background-color: #cbd5e0;
             }
           }
-          
+
           &.confirm-btn {
             background-color: #6366F1;
             color: white;
-            
+
             &:disabled {
               background-color: #a5a6f6;
               cursor: not-allowed;
             }
-            
+
             &:not(:disabled):hover {
               background-color: #4F46E5;
             }
@@ -482,7 +482,7 @@
   display: flex;
   overflow-x: auto;
   gap: 0.5rem;
-  
+
   &::-webkit-scrollbar {
     height: 0;
     width: 0;
@@ -501,38 +501,38 @@
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s;
-  
+
   &:hover {
     background-color: #f5f5f5;
   }
-  
+
   &.active {
     background-color: #8E67FD;
     color: white;
-    
+
     svg {
       fill: white;
     }
   }
-  
+
   .tab-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     svg {
       fill: #666;
       width: 1.25rem;
       height: 1.25rem;
     }
   }
-  
+
   &.add-tab {
     width: 2.5rem;
     height: 2.5rem;
     padding: 0;
     justify-content: center;
-    
+
     .plus-icon {
       font-size: 1.5rem;
       line-height: 1;
@@ -542,11 +542,11 @@
 
 .add-form {
   background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  // border-radius: 0.5rem;
+  // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
-  margin: 0 1rem 1rem;
-  
+  // margin: 0 1rem 1rem;
+
   h3 {
     font-size: 1.125rem;
     font-weight: 500;
@@ -554,92 +554,95 @@
     margin-bottom: 1rem;
     color: #333;
   }
-  
+
   h4 {
     font-size: 0.875rem;
     font-weight: 600;
     margin: 1.25rem 0 0.75rem;
     color: #4b5563;
   }
-  
+
   .form-group {
     margin-bottom: 1rem;
-    
+
     label {
       display: block;
       font-weight: 500;
       margin-bottom: 0.5rem;
       color: #555;
     }
-    
-    input, select, textarea {
+
+    input,
+    select,
+    textarea {
       width: 100%;
       padding: 0.5rem 0.75rem;
       border: 1px solid #ddd;
       border-radius: 0.25rem;
       font-size: 0.875rem;
-      
+
       &:focus {
         outline: none;
         border-color: #8E67FD;
         box-shadow: 0 0 0 3px rgba(142, 103, 253, 0.1);
       }
     }
-    
+
     textarea {
       resize: vertical;
       min-height: 4rem;
     }
-    
+
     &.checkbox-wrapper {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      
+
       input[type="checkbox"] {
         width: auto;
         margin: 0;
       }
-      
+
       label {
         margin-bottom: 0;
         font-weight: normal;
       }
     }
   }
-  
+
   .form-row {
     display: flex;
     gap: 1rem;
-    
+
     .half-width {
       flex: 1;
     }
   }
-  
-  .limits-container, .dropdown-container {
+
+  .limits-container,
+  .dropdown-container {
     background-color: #f9fafb;
     border: 1px solid #e5e7eb;
     border-radius: 0.375rem;
     padding: 0.75rem;
     margin-bottom: 1rem;
   }
-  
+
   .dropdown-options {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-top: 0.5rem;
-    
+
     .dropdown-option {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      
+
       input {
         flex: 1;
       }
-      
+
       .remove-option {
         background: none;
         border: none;
@@ -648,13 +651,13 @@
         line-height: 1;
         cursor: pointer;
         padding: 0.25rem;
-        
+
         &:hover {
           color: #ef4444;
         }
       }
     }
-    
+
     .add-option {
       align-self: flex-start;
       background-color: #f3f4f6;
@@ -666,20 +669,20 @@
       margin-top: 0.5rem;
       cursor: pointer;
       transition: all 0.2s;
-      
+
       &:hover {
         background-color: #e5e7eb;
         border-color: #9ca3af;
       }
     }
   }
-  
+
   .form-actions {
     display: flex;
     justify-content: flex-end;
     gap: 0.75rem;
     margin-top: 1.5rem;
-    
+
     button {
       padding: 0.5rem 1rem;
       border-radius: 0.25rem;
@@ -688,26 +691,26 @@
       transition: background-color 0.2s;
       font-size: 0.875rem;
     }
-    
+
     .cancel-btn {
       background-color: #f1f3f5;
       color: #555;
       border: 1px solid #ddd;
-      
+
       &:hover {
         background-color: #e9ecef;
       }
     }
-    
+
     .confirm-btn {
       background-color: #8E67FD;
       color: white;
       border: none;
-      
+
       &:hover {
         background-color: #7d58e5;
       }
-      
+
       &:disabled {
         background-color: #c4b5fd;
         cursor: not-allowed;
@@ -716,8 +719,14 @@
   }
 }
 
+.add-field-form-c {
+  display: flex;
+  justify-content: center;
+}
+
 .add-field-form {
   max-width: 600px;
+  min-width: 100%;
 }
 
 .section-content {
@@ -731,18 +740,18 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  
+
   h2 {
     font-size: 1.25rem;
     font-weight: 500;
     color: #333;
     margin: 0;
   }
-  
+
   .section-actions {
     display: flex;
     gap: 0.75rem;
-    
+
     button {
       padding: 0.5rem 1rem;
       border-radius: 0.25rem;
@@ -751,22 +760,22 @@
       cursor: pointer;
       transition: background-color 0.2s;
     }
-    
+
     .add-field-btn {
       background-color: #8E67FD;
       color: white;
       border: none;
-      
+
       &:hover {
         background-color: #4f46e5;
       }
     }
-    
+
     .delete-section-btn {
       background-color: #ef4444;
       color: white;
       border: none;
-      
+
       &:hover {
         background-color: #dc2626;
       }
@@ -800,17 +809,17 @@
   gap: 0.5rem;
   margin-bottom: 0.75rem;
   position: relative;
-  
+
   span {
     font-weight: 500;
     color: #374151;
   }
-  
+
   .info-icon {
     position: relative;
     cursor: pointer;
     z-index: 10;
-    
+
     .tooltip-content {
       position: absolute;
       bottom: 100%;
@@ -828,7 +837,7 @@
       visibility: hidden;
       transition: opacity 0.2s, visibility 0.2s;
       pointer-events: none;
-      
+
       &:after {
         content: "";
         position: absolute;
@@ -842,13 +851,13 @@
         border-top: 6px solid #374151;
       }
     }
-    
+
     &:hover .tooltip-content {
       opacity: 1;
       visibility: visible;
     }
   }
-  
+
   .required-badge {
     font-size: 0.625rem;
     font-weight: 500;
@@ -868,27 +877,26 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  
+
   .delete-field-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
     border: none;
-    width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    padding-inline: 1rem;
+    padding: 1rem;
     cursor: pointer;
     transition: background-color 0.2s;
-    
+
     svg {
       fill: #9ca3af;
     }
-    
+
     &:hover {
       background-color: #fee2e2;
-      
+
       svg {
         fill: #ef4444;
       }
@@ -903,4 +911,16 @@
   text-align: center;
   color: #6b7280;
   grid-column: 1 / -1;
+}
+
+.flex-row-justify-start {
+  display: flex;
+  justify-content: start;
+}
+
+input[type='checkbox'] {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
 }

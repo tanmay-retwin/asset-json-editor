@@ -1,0 +1,1080 @@
+{
+  "sections": {
+    "lca": {
+      "carbon_intensity": {
+        "units": "units_kg_co2_per_j",
+        "limits": {
+          "max": 10000,
+          "min": 0
+        },
+        "default": 1,
+        "datatype": "number",
+        "required": false,
+        "field_name": "carbon_intensity_name",
+        "description": "carbon_intensity_desc"
+      }
+    },
+    "overview": {
+      "zip": {
+        "units": "units_text",
+        "default": "10115",
+        "datatype": "text",
+        "required": true,
+        "field_name": "zip_name",
+        "description": "zip_desc"
+      },
+      "city": {
+        "units": "units_text",
+        "default": "Berlin",
+        "datatype": "text",
+        "required": true,
+        "field_name": "city_name",
+        "description": "city_desc"
+      },
+      "address": {
+        "units": "units_text",
+        "default": "Germany, Berlin",
+        "datatype": "text",
+        "required": true,
+        "field_name": "address_name",
+        "description": "address_desc"
+      },
+      "location": {
+        "units": "units_text",
+        "default": "Berlin",
+        "datatype": "text",
+        "required": true,
+        "field_name": "location_name",
+        "description": "location_desc"
+      },
+      "asset_tso_id": {
+        "default": "DE_50HZ",
+        "datatype": "text",
+        "dropdown": [
+          "DE_50HZ",
+          "DE_AMPRION",
+          "DE_TENNET",
+          "DE_TRANSNET"
+        ],
+        "required": true,
+        "field_name": "asset_tso_id_name",
+        "description": "asset_tso_id_desc"
+      },
+      "asset_country": {
+        "hint": "asset_country_hint",
+        "default": "DE",
+        "datatype": "text",
+        "dropdown": [
+          "DE"
+        ],
+        "required": true,
+        "field_name": "asset_country_name",
+        "description": "asset_country_desc"
+      },
+      "asset_location": {
+        "lat": {
+          "units": "units_degrees",
+          "limits": {
+            "max": 90,
+            "min": -90
+          },
+          "default": 51,
+          "datatype": "number",
+          "required": true,
+          "field_name": "asset_location_lat_name",
+          "description": "asset_location_lat_desc"
+        },
+        "long": {
+          "units": "units_degrees",
+          "limits": {
+            "max": 180,
+            "min": -180
+          },
+          "default": 12.2,
+          "datatype": "number",
+          "required": true,
+          "field_name": "asset_location_long_name",
+          "description": "asset_location_long_desc"
+        }
+      },
+      "asset_operation_end": {
+        "units": "units_date",
+        "limits": {
+          "max": "2100-12-31T23:00:00Z",
+          "min": "2019-12-31T23:00:00Z"
+        },
+        "default": "2040-12-31T23:00:00Z",
+        "datatype": "date",
+        "required": true,
+        "field_name": "asset_operation_end_name",
+        "description": "asset_operation_end_desc"
+      },
+      "asset_operation_start": {
+        "units": "units_date",
+        "limits": {
+          "max": "2100-12-31T23:00:00Z",
+          "min": "1999-12-31T23:00:00Z"
+        },
+        "default": "2025-12-31T23:00:00Z",
+        "datatype": "date",
+        "required": true,
+        "field_name": "asset_operation_start_name",
+        "description": "asset_operation_start_desc"
+      },
+      "grid_emissions_factor": {
+        "units": "units_kg_per_mwh",
+        "limits": {
+          "max": 1000,
+          "min": 0
+        },
+        "default": 300,
+        "datatype": "number",
+        "required": true,
+        "field_name": "grid_emissions_factor_name",
+        "description": "grid_emissions_factor_desc"
+      },
+      "asset_construction_end": {
+        "units": "units_date",
+        "limits": {
+          "max": "2100-12-31T23:00:00Z",
+          "min": "1999-12-31T23:00:00Z"
+        },
+        "default": "2025-12-31T23:00:00Z",
+        "datatype": "date",
+        "required": true,
+        "field_name": "asset_construction_end_name",
+        "description": "asset_construction_end_desc"
+      },
+      "asset_construction_start": {
+        "units": "units_date",
+        "limits": {
+          "max": "2029-12-31T23:00:00Z",
+          "min": "2019-12-31T23:00:00Z"
+        },
+        "default": "2024-12-31T23:00:00Z",
+        "datatype": "date",
+        "required": true,
+        "field_name": "asset_construction_start_name",
+        "description": "asset_construction_start_desc"
+      },
+      "renewable_emissions_factor": {
+        "units": "units_kg_per_mwh",
+        "limits": {
+          "max": 1000,
+          "min": 0
+        },
+        "default": 0,
+        "datatype": "number",
+        "required": true,
+        "field_name": "renewable_emissions_factor_name",
+        "description": "renewable_emissions_factor_desc"
+      }
+    },
+    "financial": {
+      "asset_cost": {
+        "units": "units_euro_per_kwh",
+        "limits": {
+          "max": 1000000,
+          "min": 0
+        },
+        "default": 200,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_cost_name",
+        "description": "asset_cost_desc"
+      },
+      "asset_cost_om": {
+        "units": "units_euro_per_kw",
+        "limits": {
+          "max": 10000,
+          "min": 0
+        },
+        "default": 5,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_cost_om_name",
+        "description": "asset_cost_om_desc"
+      },
+      "asset_inflation": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.03,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_inflation_name",
+        "description": "asset_inflation_desc"
+      },
+      "asset_direct_cost": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 5,
+          "min": 0
+        },
+        "default": 0.25,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_direct_cost_name",
+        "description": "asset_direct_cost_desc"
+      },
+      "asset_irr_nominal": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.2,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_irr_nominal_name",
+        "description": "asset_irr_nominal_desc"
+      },
+      "asset_wacc_nominal": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.1,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_wacc_nominal_name",
+        "description": "asset_wacc_nominal_desc"
+      },
+      "asset_indirect_cost": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 5,
+          "min": 0
+        },
+        "default": 0.25,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_indirect_cost_name",
+        "description": "asset_indirect_cost_desc"
+      },
+      "asset_cost_escalation": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": -1
+        },
+        "default": 0,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_cost_escalation_name",
+        "description": "asset_cost_escalation_desc"
+      },
+      "asset_debt_interest_rate": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.1,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_debt_interest_rate_name",
+        "description": "asset_debt_interest_rate_desc"
+      }
+    },
+    "technical": {
+      "asset_type": {
+        "default": "Li-ion",
+        "datatype": "text",
+        "dropdown": [
+          "Li-ion"
+        ],
+        "required": true,
+        "field_name": "asset_type_name",
+        "description": "asset_type_desc"
+      },
+      "asset_max_soc": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.9,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_max_soc_name",
+        "description": "asset_max_soc_desc"
+      },
+      "asset_min_soc": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.1,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_min_soc_name",
+        "description": "asset_min_soc_desc"
+      },
+      "asset_capacity": {
+        "units": "units_mwh",
+        "limits": {
+          "max": 1000,
+          "min": 1
+        },
+        "default": 20,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_capacity_name",
+        "description": "asset_capacity_desc"
+      },
+      "asset_final_soc": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.1,
+        "datatype": "number",
+        "required": false,
+        "field_name": "asset_final_soc_name",
+        "description": "asset_final_soc_desc"
+      },
+      "asset_initial_soc": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.5,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_initial_soc_name",
+        "description": "asset_initial_soc_desc"
+      },
+      "asset_power_rating": {
+        "units": "units_mw",
+        "limits": {
+          "max": 1000,
+          "min": 0
+        },
+        "default": 10,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_power_rating_name",
+        "description": "asset_power_rating_desc"
+      },
+      "asset_soh_end_of_life": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.6,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_soh_end_of_life_name",
+        "description": "asset_soh_end_of_life_desc"
+      },
+      "asset_soh_start_of_life": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 1,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_soh_start_of_life_name",
+        "description": "asset_soh_start_of_life_desc"
+      },
+      "asset_charging_efficiency": {
+        "units": "units_mw_per_mw",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.95,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_charging_efficiency_name",
+        "description": "asset_charging_efficiency_desc"
+      },
+      "asset_degradation_enabled": {
+        "default": false,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": false,
+        "field_name": "asset_degradation_enabled_name",
+        "description": "asset_degradation_enabled_desc"
+      },
+      "asset_degradation_as_cycles": {
+        "default": "cycle_count,depth_of_discharge_20_percent,depth_of_discharge_50_percent,depth_of_discharge_80_percent\n0,0,0,0\n100,0.5,0.5,0.8\n200,1,1,1.5\n300,2,3.5,4\n500,5,5.5,7.5\n1000,7,10,12\n2000,12,18,22\n3000,18,25,30\n4000,25,35,40\n5000,35,45,50\n8000,50,65,75",
+        "datatype": "text",
+        "required": true,
+        "field_name": "asset_degradation_as_cycles_name",
+        "description": "asset_degradation_as_cycles_desc"
+      },
+      "asset_allowed_cycles_per_day": {
+        "units": "units_cycles_per_day",
+        "limits": {
+          "max": 24,
+          "min": 0
+        },
+        "default": 1.25,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_allowed_cycles_per_day_name",
+        "description": "asset_allowed_cycles_per_day_desc"
+      },
+      "asset_discharging_efficiency": {
+        "units": "units_mw_per_mw",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.95,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_discharging_efficiency_name",
+        "description": "asset_discharging_efficiency_desc"
+      },
+      "asset_allowed_cycles_per_year": {
+        "units": "units_cycles_per_year",
+        "limits": {
+          "max": 10000,
+          "min": 0
+        },
+        "default": 300,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_allowed_cycles_per_year_name",
+        "description": "asset_allowed_cycles_per_year_desc"
+      },
+      "asset_total_cycles_over_lifetime": {
+        "units": "units_cycles",
+        "limits": {
+          "max": 50000,
+          "min": 500
+        },
+        "default": 10000,
+        "datatype": "number",
+        "required": true,
+        "field_name": "asset_total_cycles_over_lifetime_name",
+        "description": "asset_total_cycles_over_lifetime_desc"
+      }
+    },
+    "commercial": {
+      "asset_offtake": {
+        "default": [
+          "market"
+        ],
+        "datatype": "text",
+        "dropdown": [
+          "market",
+          "demand",
+          "supply"
+        ],
+        "required": true,
+        "field_name": "asset_offtake_name",
+        "description": "asset_offtake_desc"
+      }
+    },
+    "constraints": {
+      "da_power_rating_limit": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 1,
+        "datatype": "percentage",
+        "required": false,
+        "field_name": "da_power_rating_limit_name",
+        "description": "da_power_rating_limit_desc"
+      },
+      "fcr_power_rating_limit": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 1,
+        "datatype": "percentage",
+        "required": false,
+        "field_name": "fcr_power_rating_limit_name",
+        "description": "fcr_power_rating_limit_desc"
+      },
+      "idc_power_rating_limit": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 1,
+        "datatype": "percentage",
+        "required": false,
+        "field_name": "idc_power_rating_limit_name",
+        "description": "idc_power_rating_limit_desc"
+      },
+      "afrr_power_rating_limit": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 1,
+        "datatype": "percentage",
+        "required": false,
+        "field_name": "afrr_power_rating_limit_name",
+        "description": "afrr_power_rating_limit_desc"
+      },
+      "mfrr_power_rating_limit": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 1,
+        "datatype": "percentage",
+        "required": false,
+        "field_name": "mfrr_power_rating_limit_name",
+        "description": "mfrr_power_rating_limit_desc"
+      },
+      "asset_allowed_power_capacity": {
+        "units": "units_mw",
+        "limits": {
+          "max": 10,
+          "min": 0
+        },
+        "default": 1,
+        "datatype": "number",
+        "required": false,
+        "field_name": "asset_allowed_power_capacity_name",
+        "description": "asset_allowed_power_capacity_desc"
+      }
+    },
+    "analysis_settings": {
+      "currency": {
+        "default": "Euro",
+        "datatype": "text",
+        "dropdown": [
+          "Euro"
+        ],
+        "required": true,
+        "field_name": "currency_name",
+        "description": "currency_desc"
+      },
+      "end_date": {
+        "limits": {
+          "max": "2050-12-31T23:00:00Z",
+          "min": "2019-12-31T23:00:00Z"
+        },
+        "default": "2024-07-31T22:00:00Z",
+        "datatype": "date",
+        "required": true,
+        "field_name": "end_date_name",
+        "description": "end_date_desc"
+      },
+      "forecast": {
+        "default": "Base Case",
+        "datatype": "text",
+        "required": true,
+        "field_name": "forecast_name",
+        "description": "forecast_desc"
+      },
+      "model_type": {
+        "default": "Bidding Model",
+        "datatype": "text",
+        "dropdown": [
+          "Bidding Model"
+        ],
+        "required": true,
+        "field_name": "model_type_name",
+        "description": "model_type_desc"
+      },
+      "start_date": {
+        "limits": {
+          "max": "2030-12-31T23:00:00Z",
+          "min": "2022-09-30T22:00:00Z"
+        },
+        "default": "2024-07-01T22:00:00Z",
+        "datatype": "date",
+        "required": true,
+        "field_name": "start_date_name",
+        "description": "start_date_desc"
+      },
+      "solver_name": {
+        "default": "appsi_highs",
+        "datatype": "text",
+        "dropdown": [
+          "glpk",
+          "scip",
+          "cbc",
+          "appsi_highs"
+        ],
+        "required": false,
+        "field_name": "solver_name_name",
+        "description": "solver_name_desc"
+      },
+      "market_focus": {
+        "default": "Balanced",
+        "datatype": "text",
+        "dropdown": [
+          "Ancillary",
+          "Balanced",
+          "Spot"
+        ],
+        "required": false,
+        "field_name": "market_focus_name",
+        "description": "market_focus_desc"
+      },
+      "std_dev_vols": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.05,
+        "datatype": "percentage",
+        "required": true,
+        "field_name": "std_dev_vols_name",
+        "description": "std_dev_vols_desc"
+      },
+      "forecast_name": {
+        "default": "imperfect",
+        "datatype": "text",
+        "dropdown": [
+          "perfect",
+          "imperfect"
+        ],
+        "required": true,
+        "field_name": "forecast_name_name",
+        "description": "forecast_name_desc"
+      },
+      "risk_appetite": {
+        "default": "Medium",
+        "datatype": "text",
+        "dropdown": [
+          "Conservative",
+          "Medium",
+          "High Risk"
+        ],
+        "required": false,
+        "field_name": "risk_appetite_name",
+        "description": "risk_appetite_desc"
+      },
+      "std_dev_prices": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.1,
+        "datatype": "percentage",
+        "required": true,
+        "field_name": "std_dev_prices_name",
+        "description": "std_dev_prices_desc"
+      },
+      "model_DA_energy": {
+        "default": true,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": true,
+        "field_name": "model_DA_energy_name",
+        "description": "model_DA_energy_desc"
+      },
+      "forecast_horizon": {
+        "limits": {
+          "max": 3,
+          "min": 1
+        },
+        "default": 1,
+        "datatype": "number",
+        "required": true,
+        "field_name": "forecast_horizon_name",
+        "description": "forecast_horizon_desc"
+      },
+      "bidding_strategies": {
+        "default": "Base Case",
+        "datatype": "text",
+        "dropdown": [
+          "Base Case",
+          "Day Ahead",
+          "Floor (Revenue Floor)",
+          "Merchant Case",
+          "Custom"
+        ]
+      },
+      "model_FCR_capacity": {
+        "default": true,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": true,
+        "field_name": "model_FCR_capacity_name",
+        "description": "model_FCR_capacity_desc"
+      },
+      "model_aFRR_NEG_energy": {
+        "default": true,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": true,
+        "field_name": "model_aFRR_NEG_energy_name",
+        "description": "model_aFRR_NEG_energy_desc"
+      },
+      "model_aFRR_POS_energy": {
+        "default": true,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": true,
+        "field_name": "model_aFRR_POS_energy_name",
+        "description": "model_aFRR_POS_energy_desc"
+      },
+      "model_imbalance_energy": {
+        "default": false,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": false,
+        "field_name": "model_imbalance_energy_name",
+        "description": "model_imbalance_energy_desc"
+      },
+      "model_aFRR_NEG_capacity": {
+        "default": true,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": true,
+        "field_name": "model_aFRR_NEG_capacity_name",
+        "description": "model_aFRR_NEG_capacity_desc"
+      },
+      "model_aFRR_POS_capacity": {
+        "default": true,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": true,
+        "field_name": "model_aFRR_POS_capacity_name",
+        "description": "model_aFRR_POS_capacity_desc"
+      },
+      "model_idc_hourly_energy": {
+        "default": true,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": false,
+        "field_name": "model_idc_hourly_energy_name",
+        "description": "model_idc_hourly_energy_desc"
+      },
+      "model_mFRR_NEG_capacity": {
+        "default": false,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": true,
+        "field_name": "model_mFRR_NEG_capacity_name",
+        "description": "model_mFRR_NEG_capacity_desc"
+      },
+      "model_mFRR_POS_capacity": {
+        "default": false,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": true,
+        "field_name": "model_mFRR_POS_capacity_name",
+        "description": "model_mFRR_POS_capacity_desc"
+      },
+      "model_investment_horizon": {
+        "default": "Day",
+        "datatype": "text",
+        "dropdown": [
+          "Day",
+          "Week"
+        ],
+        "required": true,
+        "field_name": "model_investment_horizon_name",
+        "description": "model_investment_horizon_desc"
+      },
+      "model_idc_half_hourly_energy": {
+        "default": false,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": false,
+        "field_name": "model_idc_half_hourly_energy_name",
+        "description": "model_idc_half_hourly_energy_desc"
+      },
+      "model_idc_quarter_hourly_energy": {
+        "default": false,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": false,
+        "field_name": "model_idc_quarter_hourly_energy_name",
+        "description": "model_idc_quarter_hourly_energy_desc"
+      },
+      "model_intraday_auction_1_energy": {
+        "default": false,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": false,
+        "field_name": "model_intraday_auction_1_energy_name",
+        "description": "model_intraday_auction_1_energy_desc"
+      },
+      "model_idc_financial_trades_energy": {
+        "default": false,
+        "datatype": "text",
+        "dropdown": [
+          "true",
+          "false"
+        ],
+        "required": false,
+        "field_name": "model_idc_financial_trades_energy_name",
+        "description": "model_idc_financial_trades_energy_desc"
+      },
+      "participation_in_ancillary_markets": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.8,
+        "datatype": "percentage",
+        "required": true,
+        "field_name": "participation_in_ancillary_markets_name",
+        "description": "participation_in_ancillary_markets_desc"
+      },
+      "model_idc_financial_trades_spread_factor": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.1,
+        "datatype": "percentage",
+        "required": false,
+        "field_name": "model_idc_financial_trades_spread_factor_name",
+        "description": "model_idc_financial_trades_spread_factor_desc"
+      },
+      "model_idc_financial_trades_volume_factor": {
+        "units": "units_percentage",
+        "limits": {
+          "max": 1,
+          "min": 0
+        },
+        "default": 0.1,
+        "datatype": "percentage",
+        "required": false,
+        "field_name": "model_idc_financial_trades_volume_factor_name",
+        "description": "model_idc_financial_trades_volume_factor_desc"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "units_mw": "MW",
+      "zip_desc": "ZIP code of the asset location",
+      "zip_name": "ZIP Code",
+      "city_desc": "City where the asset is located",
+      "city_name": "City",
+      "units_mwh": "MWh",
+      "units_date": "date",
+      "units_text": "text",
+      "address_desc": "Full address where the asset is located",
+      "address_name": "Address",
+      "units_cycles": "cycles",
+      "currency_desc": "Currency used for analysis",
+      "currency_name": "Currency",
+      "end_date_desc": "End Date up to which model is run",
+      "end_date_name": "End Date of analysis",
+      "forecast_desc": "Power Market forecast based on fundamental model of the grid",
+      "forecast_name": "Fundamental Long Term Forecast",
+      "location_desc": "Geographical location details",
+      "location_name": "Location",
+      "units_degrees": "degrees",
+      "asset_cost_desc": "Base unit cost of the asset (e.g. hardware cost)",
+      "asset_cost_name": "Asset Unit Cost",
+      "asset_type_desc": "Type of energy storage asset",
+      "asset_type_name": "Asset Type",
+      "model_type_desc": "Type of model used for analysis",
+      "model_type_name": "Model Type",
+      "start_date_desc": "Starting date from which the model is run",
+      "start_date_name": "Start Date of analysis",
+      "units_mw_per_mw": "MW/MW",
+      "solver_name_desc": "Optimization solver to use",
+      "solver_name_name": "Solver Name",
+      "units_kg_per_mwh": "kg/MWh of CO2 emitted",
+      "units_percentage": "%",
+      "asset_tso_id_desc": "TSO ID where the asset is located",
+      "asset_tso_id_name": "Asset TSO ID",
+      "market_focus_desc": "Ancillary focus = Higher share of BESS capacity allocated to ancillary market",
+      "market_focus_name": "Market Focus",
+      "std_dev_vols_desc": "Volume fluctuations as a percentage from the actual value",
+      "std_dev_vols_name": "Standard Deviation of Volumes",
+      "asset_cost_om_desc": "Yearly Ops and maintenance cost as a % of unit cost",
+      "asset_cost_om_name": "Asset O&M Cost",
+      "asset_country_desc": "Country code where the asset is located",
+      "asset_country_hint": "Use ISO country codes",
+      "asset_country_name": "Asset Country",
+      "asset_max_soc_desc": "Maximum allowable state of charge",
+      "asset_max_soc_name": "Maximum State of Charge",
+      "asset_min_soc_desc": "Minimum allowable state of charge in analysis",
+      "asset_min_soc_name": "Minimum State of Charge",
+      "asset_offtake_desc": "Available offtake options",
+      "asset_offtake_name": "Asset Offtake Options",
+      "forecast_name_desc": "Type of forecast to use",
+      "forecast_name_name": "Forecast Type",
+      "risk_appetite_desc": "High Risk = Large volume bids with lower acceptance chance",
+      "risk_appetite_name": "Risk Appetite",
+      "units_euro_per_kwh": "Euro/kWh",
+      "units_kg_co2_per_j": "kg/J of CO2",
+      "asset_capacity_desc": "Storage capacity of the asset",
+      "asset_capacity_name": "Asset Capacity",
+      "std_dev_prices_desc": "Price fluctuations as a percentage from the actual value",
+      "std_dev_prices_name": "Standard Deviation of Prices",
+      "asset_final_soc_desc": "State of charge at the end of analysis",
+      "asset_final_soc_name": "Final State of Charge",
+      "asset_inflation_desc": "Inflation % assumed for the asset YoY",
+      "asset_inflation_name": "Asset Inflation",
+      "model_DA_energy_desc": "{\"title\": \"Day Ahead (DA)\", \"body\": \"Trades electricity in hourly intervals with daily auctions. Gate closure is at 12 Noon CET for delivery the following day.\", \"link\": \"https://docs.re-twin.energy/markets/day-ahead\"}",
+      "model_DA_energy_name": "Day Ahead",
+      "units_cycles_per_day": "cycles/day",
+      "bidding_strategy_desc": "Conservative or High Risk for bidding",
+      "bidding_strategy_name": "Bidding Strategy",
+      "carbon_intensity_desc": "Carbon intensity of the asset",
+      "carbon_intensity_name": "Carbon Intensity",
+      "forecast_horizon_desc": "Number of days ahead to be used for planning",
+      "forecast_horizon_name": "Forecast Horizon",
+      "units_cycles_per_year": "cycles/year",
+      "asset_direct_cost_desc": "Added Direct Costs as % of unit cost (e.g. DevEx, EPC etc.)",
+      "asset_direct_cost_name": "Asset Direct Costs ",
+      "asset_initial_soc_desc": "Initial state of charge at start of analysis",
+      "asset_initial_soc_name": "Initial State of Charge",
+      "asset_irr_nominal_desc": "Nominal internal rate of return target",
+      "asset_irr_nominal_name": "Nominal IRR",
+      "asset_location_lat_desc": "Latitude of asset location",
+      "asset_location_lat_name": "Latitude",
+      "asset_power_rating_desc": "Power rating of the asset",
+      "asset_power_rating_name": "Asset Power Rating",
+      "asset_wacc_nominal_desc": "Nominal weighted average cost of capital",
+      "asset_wacc_nominal_name": "Nominal WACC",
+      "model_FCR_capacity_desc": "{\"title\": \"Frequency Containment Reserve (FCR)\", \"body\": \"Responds automatically to grid frequency deviations (49.99–50.01 Hz) with daily pay-as-cleared auctions with gate closure at 8 AM for following day\", \"link\": \"https://docs.re-twin.energy/markets/ancillary-services/fcr\"}",
+      "model_FCR_capacity_name": "FCR",
+      "asset_indirect_cost_desc": "Added Indirect Costs as % of unit cost (e.g. contingencies)",
+      "asset_indirect_cost_name": "Asset Indirect Costs ",
+      "asset_location_long_desc": "Longitude of asset location",
+      "asset_location_long_name": "Longitude",
+      "asset_operation_end_desc": "Date on which asset operation is planned to end",
+      "asset_operation_end_name": "Operation End Date",
+      "asset_cost_escalation_desc": "Annual escalation as a % of base asset cost",
+      "asset_cost_escalation_name": "Cost Escalation",
+      "asset_operation_start_desc": "Date on which asset begins operational phase",
+      "asset_operation_start_name": "Operation Start Date",
+      "asset_soh_end_of_life_desc": "The expected state of health at end of life as a % of beginning of life",
+      "asset_soh_end_of_life_name": "State of Health at the End of Life",
+      "da_power_rating_limit_desc": "Maximum power rating for DA Market",
+      "da_power_rating_limit_name": "DA Power Rating Limit",
+      "grid_emissions_factor_desc": "Average emissions factor of the grid in kilograms of CO₂ per MWh",
+      "grid_emissions_factor_name": "Grid Emissions Factor",
+      "model_aFRR_NEG_energy_desc": "{\"title\": \"aFRR Energy Negative\", \"body\": \"Downward regulation reserve; power is withdrawn from the grid to maintain frequency balance. Participants receive compensation for reducing generation or increasing consumption when activated.\"}",
+      "model_aFRR_NEG_energy_name": "aFRR Energy Negative",
+      "model_aFRR_POS_energy_desc": "{\"title\": \"aFRR Energy Positive\", \"body\": \"Upward regulation reserve; power is injected into the grid to balance frequency deviations. Participants receive compensation for increasing generation or reducing consumption when requested.\"}",
+      "model_aFRR_POS_energy_name": "aFRR Energy Positive",
+      "asset_construction_end_desc": "Date on which asset construction completes",
+      "asset_construction_end_name": "Construction End Date",
+      "fcr_power_rating_limit_desc": "Maximum power rating for FCR Market",
+      "fcr_power_rating_limit_name": "FCR Power Rating Limit",
+      "idc_power_rating_limit_desc": "Maximum power rating for ID Continuous Market",
+      "idc_power_rating_limit_name": "ID Continuous Power Rating Limit",
+      "model_imbalance_energy_desc": "{\"title\": \"Imbalance Market\", \"body\": \"Real-time market where deviations from scheduled positions are settled. Participants pay or receive imbalance prices based on their shortfall or surplus against actual system needs.\"}",
+      "model_imbalance_energy_name": "Imbalance Market",
+      "aFRR_power_rating_limit_desc": "Maximum power rating for aFRR Market",
+      "aFRR_power_rating_limit_name": "aFRR Power Rating Limit",
+      "asset_soh_start_of_life_desc": "The expected state of health at start of life as a % of beginning of life",
+      "asset_soh_start_of_life_name": "State of Health at the Start of Life",
+      "mFRR_power_rating_limit_desc": "Maximum power rating for mFRR Market",
+      "mFRR_power_rating_limit_name": "mFRR Power Rating Limit",
+      "model_aFRR_NEG_capacity_desc": "{\"title\": \"aFRR Negative Capacity\", \"body\": \"Responds to frequency rises (>50 Hz) by reducing feed-in or consuming power with pay-as-bid with gate closure at 9 AM for following day\", \"link\": \"https://docs.re-twin.energy/markets/ancillary-services/afrr\"}",
+      "model_aFRR_NEG_capacity_name": "aFRR Negative Capacity",
+      "model_aFRR_POS_capacity_desc": "{\"title\": \"aFRR Positive Capacity\", \"body\": \"Responds to frequency drops (<50 Hz) by feeding power into the grid with pay-as-bid auctions with gate closure at 9 AM for following day\", \"link\": \"https://docs.re-twin.energy/markets/ancillary-services/afrr\"}",
+      "model_aFRR_POS_capacity_name": "aFRR Positive Capacity",
+      "model_idc_hourly_energy_desc": "{\"title\": \"Intraday Continuous Hourly\", \"body\": \"Trades electricity in continuous hourly contracts. For EPEX, gate closure is up to 5 minutes before delivery, varying by country. Prices adjust dynamically based on real-time trading.\"}",
+      "model_idc_hourly_energy_name": "Intraday Continuous Hourly",
+      "model_mFRR_NEG_capacity_desc": "{\"title\": \"mFRR Negative Capacity\", \"body\": \"Responds to sustained frequency rises (>50 Hz) with manual activation and pay-as-bid pricing with gate closure at 10 AM for following day\", \"link\": \"https://docs.re-twin.energy/markets/ancillary-services/mfrr\"}",
+      "model_mFRR_NEG_capacity_name": "mFRR Negative Capacity",
+      "model_mFRR_POS_capacity_desc": "{\"title\": \"mFRR Positive Capacity\", \"body\": \"Responds to sustained frequency drops (<50 Hz) with manual activation and pay-as-bid pricing with gate closure at 10 AM for following day\", \"link\": \"https://docs.re-twin.energy/markets/ancillary-services/mfrr\"}",
+      "model_mFRR_POS_capacity_name": "mFRR Positive Capacity",
+      "asset_construction_start_desc": "Date on which asset construction begins",
+      "asset_construction_start_name": "Construction Start Date",
+      "asset_debt_interest_rate_desc": "Interest Rate on Debt",
+      "asset_debt_interest_rate_name": "Asset Debt Rate",
+      "model_investment_horizon_desc": "Schedule the asset on a daily/weekly basis",
+      "model_investment_horizon_name": "Investment Horizon",
+      "asset_charging_efficiency_desc": "Charging efficiency of the asset",
+      "asset_charging_efficiency_name": "Asset Charging Efficiency",
+      "asset_degradation_enabled_desc": "If enabled: Degradation impacts revenues on yearly basis",
+      "asset_degradation_enabled_name": "Enable Degradation (Yearly basis)",
+      "renewable_emissions_factor_desc": "Emissions factor for renewable energy in kilograms of CO₂ per MWh",
+      "renewable_emissions_factor_name": "Renewable Emissions Factor",
+      "asset_degradation_as_cycles_desc": "Expected degradation of the asset as a % of initial degradation on a cycle basis",
+      "asset_degradation_as_cycles_name": "Asset Degradation with Number of Cycles",
+      "asset_allowed_cycles_per_day_desc": "Maximum number of charge/discharge cycles permitted daily",
+      "asset_allowed_cycles_per_day_name": "Allowed Cycles per Day",
+      "asset_allowed_power_capacity_desc": "Due to grid constraints, the actual power capacity could be lower than total power capacity",
+      "asset_allowed_power_capacity_name": "Substation Capacity (% of Power Rating)",
+      "asset_discharging_efficiency_desc": "Discharging efficiency of the asset",
+      "asset_discharging_efficiency_name": "Asset Discharging Efficiency",
+      "model_idc_half_hourly_energy_desc": "ID market with 1/2 hour contracts",
+      "model_idc_half_hourly_energy_name": "Intraday Continuous Half Hourly",
+      "asset_allowed_cycles_per_year_desc": "Maximum number of charge/discharge cycles permitted annually",
+      "asset_allowed_cycles_per_year_name": "Allowed Cycles per Year",
+      "model_idc_quarter_hourly_energy_desc": "ID market with 1/4 hour contracts",
+      "model_idc_quarter_hourly_energy_name": "Intraday Continuous Quarter Hourly",
+      "model_intraday_auction_1_energy_desc": "{\"title\": \"Intraday Auction 1\", \"body\": \"Trades hourly electricity in a daily auction. For EPEX, gate closure is 3 PM CET for next-day delivery. Prices are set based on supply and demand.\"}",
+      "model_intraday_auction_1_energy_name": "Intraday Auction 1",
+      "asset_total_cycles_over_lifetime_desc": "Total Cycles over the lifetime",
+      "asset_total_cycles_over_lifetime_name": "Total Cycles Over Lifetime",
+      "model_idc_financial_trades_energy_desc": "{\"title\": \"Intraday Continuous Temporal Arbitrage\", \"body\": \"Profit by buying and selling in the intraday continuous market at different times while keeping a net-zero position, exploiting price fluctuations without taking long-term exposure.\"}",
+      "model_idc_financial_trades_energy_name": "Intraday Continuous Temporal Arbitrage",
+      "participation_in_ancillary_markets_desc": "Indicates whether the asset participates in ancillary service markets",
+      "participation_in_ancillary_markets_name": "Participation in Ancillary Markets",
+      "model_idc_financial_trades_spread_factor_desc": "Proportion of total spread possible on the VWAP",
+      "model_idc_financial_trades_spread_factor_name": "Spread Factor for Temporal Arbitrage",
+      "model_idc_financial_trades_volume_factor_desc": "Proportion of total BESS power rating",
+      "model_idc_financial_trades_volume_factor_name": "Volume Factor for Temporal Arbitrage"
+    }
+  }
+}

@@ -152,7 +152,8 @@ export class JsonEditorComponent implements OnInit {
       return;
     }
 
-    const sectionName = this.sectionForm.get('sectionName')?.value;
+    let sectionName: string = this.sectionForm.get('sectionName')?.value;
+    sectionName = sectionName?.toLowerCase().split(' ').join('_');
 
     if (!sectionName || sectionName.trim().length === 0) {
       return;
@@ -166,6 +167,8 @@ export class JsonEditorComponent implements OnInit {
       this.selectSection(sectionName);
       this.showAddSectionForm = false;
       this.sectionForm.reset();
+    } else {
+      alert('Section name already exists.');
     }
   }
 
@@ -229,6 +232,14 @@ export class JsonEditorComponent implements OnInit {
   editField(fieldName: string): void {
     const field = this.currentFields[fieldName];
     if (!field) return;
+
+    if (this.isEditMode && this.editingFieldName === fieldName) {
+      // save conditions
+      this.isEditMode = false;
+      this.editingFieldName = '';
+      this.showAddFieldForm = false;
+      return;
+    }
 
     this.isEditMode = true;
     this.editingFieldName = fieldName;
@@ -313,11 +324,11 @@ export class JsonEditorComponent implements OnInit {
       description: formValues.description || '',
     };
 
-    if (formValues.units) {
+    if (formValues?.units) {
       fieldTemplate.units = formValues.units;
     }
 
-    if (formValues.fieldType === 'number') {
+    if (formValues?.fieldType === 'number') {
       fieldTemplate.default =
         formValues.defaultValue !== ''
           ? parseFloat(formValues.defaultValue)
@@ -438,5 +449,12 @@ export class JsonEditorComponent implements OnInit {
     if (success) {
       this.loadSections();
     }
+  }
+
+  formatSectionName(name: string): string {
+    return name
+      ?.split('_')
+      .map((np) => `${np.charAt(0).toUpperCase()}${np.slice(1)}`)
+      .join(' ');
   }
 }

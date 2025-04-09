@@ -31,7 +31,6 @@
           <h3>Add New Section</h3>
           <form [formGroup]="sectionForm" (ngSubmit)="addNewSection()">
             <div class="form-group">
-              <label for="sectionName">Section Name</label>
               <input type="text" id="sectionName" formControlName="sectionName" placeholder="Enter section name" />
             </div>
             <div class="form-actions">
@@ -49,7 +48,7 @@
         <ul class="sections-list">
           @for (section of sections; track section) {
           <li [class.active]="section === activeSection" (click)="selectSection(section)">
-            {{ section }}
+            {{ formatSectionName(section) }}
           </li>
           }
         </ul>
@@ -58,7 +57,7 @@
       @if (activeSection) {
       <div class="section-content">
         <div class="section-header">
-          <h3>{{ activeSection }}</h3>
+          <h3>{{ formatSectionName(activeSection) }}</h3>
           <div class="section-actions">
             <button class="add-field-btn" (click)="toggleAddFieldForm()">
               Add Field
@@ -72,148 +71,165 @@
         </div>
 
         @if (showAddFieldForm) {
-        <div class="add-form add-field-form">
-          <h3>{{ isEditMode ? 'Edit Field' : 'Add New Field' }}</h3>
-          <form [formGroup]="fieldForm" (ngSubmit)="saveField()">
-            <div class="form-group">
-              <label for="fieldName">Field Name</label>
-              <input type="text" id="fieldName" formControlName="fieldName"
-                placeholder="Enter field name (e.g. temperature)" [readonly]="isEditMode"
-                [class.disabled]="isEditMode" />
-            </div>
-
-            <div class="form-group">
-              <label for="fieldType">Field Type</label>
-              <select id="fieldType" formControlName="fieldType">
-                <option value="text">Text</option>
-                <option value="number">Number</option>
-                <option value="date">Date</option>
-                <option value="boolean">Boolean</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="displayName">Display Name</label>
-              <input type="text" id="displayName" formControlName="displayName"
-                placeholder="Enter display name (e.g. Temperature)" />
-            </div>
-
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea id="description" formControlName="description" placeholder="Enter field description"></textarea>
-            </div>
-
-            @if (fieldForm.get('fieldType')?.value !== 'boolean') {
-            <div class="form-group">
-              <label for="units">Units (optional)</label>
-              <input type="text" id="units" formControlName="units" placeholder="Enter units (e.g. °C)" />
-            </div>
-            }
-
-            @if (fieldForm.get('fieldType')?.value === 'text') {
-            <div class="form-group">
-              <div class="checkbox-wrapper">
-                <input type="checkbox" id="isDropdown" formControlName="isDropdown" />
-                <label for="isDropdown">Make this a dropdown field</label>
+        <div class="add-field-form-c">
+          <div class="add-form add-field-form">
+            <h3>{{ isEditMode ? 'Edit Field' : 'Add New Field' }}</h3>
+            <form [formGroup]="fieldForm" (ngSubmit)="saveField()">
+              <div class="form-group">
+                <label for="fieldName">Field Name</label>
+                <input type="text" id="fieldName" formControlName="fieldName"
+                  placeholder="Enter field name (e.g. temperature)" [readonly]="isEditMode"
+                  [class.disabled]="isEditMode" />
               </div>
-            </div>
-            }
 
-            @if (fieldForm.get('isDropdown')?.value) {
-            <div class="dropdown-container">
-              <h4>Dropdown Options</h4>
-              <div class="dropdown-options" formArrayName="dropdownOptions">
-                <div class="dropdown-option" *ngFor="let option of dropdownOptions.controls; let i = index">
-                  <input type="text" [formControlName]="i" placeholder="Enter option value" />
-                  <button type="button" class="remove-option" (click)="removeDropdownOption(i)"
-                    *ngIf="dropdownOptions.length > 1">×</button>
-                </div>
-                <button type="button" class="add-option" (click)="addDropdownOption()">+ Add Option</button>
-              </div>
-            </div>
-            }
-
-            <!-- Number field limits -->
-            <div class="limits-container" *ngIf="fieldForm.get('fieldType')?.value === 'number'">
-              <h4>Number Limits (optional)</h4>
-              <div class="form-row">
-                <div class="form-group half-width">
-                  <label for="minValue">Minimum Value</label>
-                  <input type="number" id="minValue" formControlName="minValue" placeholder="Min value" />
-                </div>
-                <div class="form-group half-width">
-                  <label for="maxValue">Maximum Value</label>
-                  <input type="number" id="maxValue" formControlName="maxValue" placeholder="Max value" />
-                </div>
-              </div>
-            </div>
-
-            <!-- Date field limits -->
-            <div class="limits-container" *ngIf="fieldForm.get('fieldType')?.value === 'date'">
-              <h4>Date Limits (optional)</h4>
-              <div class="form-row">
-                <div class="form-group half-width">
-                  <label for="minDate">Minimum Date</label>
-                  <input type="date" id="minDate" formControlName="minDate" />
-                </div>
-                <div class="form-group half-width">
-                  <label for="maxDate">Maximum Date</label>
-                  <input type="date" id="maxDate" formControlName="maxDate" />
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="defaultValue">Default Value</label>
-              <ng-container [ngSwitch]="fieldForm.get('fieldType')?.value">
-                <input *ngSwitchCase="'text'"
-                  [ngStyle]="{display: fieldForm.get('isDropdown')?.value ? 'none' : 'block'}" type="text"
-                  id="defaultValue" formControlName="defaultValue" placeholder="Enter default value" />
-                <select *ngSwitchCase="'text'"
-                  [ngStyle]="{display: fieldForm.get('isDropdown')?.value ? 'block' : 'none'}" id="defaultValue"
-                  formControlName="defaultValue">
-                  <option value="">Select a default option</option>
-                  <ng-container *ngFor="let option of dropdownOptions.controls; let i = index">
-                    <option [ngValue]="option.value">{{ option.value }}</option>
-                  </ng-container>
+              <div class="form-group">
+                <label for="fieldType">Field Type</label>
+                <select id="fieldType" formControlName="fieldType">
+                  <option value="text">Text</option>
+                  <option value="number">Number</option>
+                  <option value="date">Date</option>
+                  <option value="boolean">Boolean</option>
                 </select>
-                <input *ngSwitchCase="'number'" type="number" id="defaultValue" formControlName="defaultValue"
-                  placeholder="Enter default value" />
-                <input *ngSwitchCase="'date'" type="date" id="defaultValue" formControlName="defaultValue" />
-                <div class="checkbox-wrapper" *ngSwitchCase="'boolean'">
-                  <input type="checkbox" id="defaultValue" formControlName="defaultValue" />
-                  <label for="defaultValue">Default Value</label>
-                </div>
-              </ng-container>
-            </div>
-
-            <div class="form-group">
-              <div class="checkbox-wrapper">
-                <input type="checkbox" id="isRequired" formControlName="isRequired" />
-                <label for="isRequired">Required Field</label>
               </div>
-            </div>
 
-            <div class="form-actions">
-              <button type="button" class="cancel-btn" (click)="toggleAddFieldForm()">
-                Cancel
-              </button>
-              <button type="submit" class="confirm-btn" [disabled]="fieldForm.invalid">
-                {{ isEditMode ? 'Update Field' : 'Add Field' }}
-              </button>
-            </div>
-          </form>
+              <div class="form-group">
+                <label for="displayName">Display Name</label>
+                <input type="text" id="displayName" formControlName="displayName"
+                  placeholder="Enter display name (e.g. Temperature)" />
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" formControlName="description"
+                  placeholder="Enter field description"></textarea>
+              </div>
+
+              @if (fieldForm.get('fieldType')?.value !== 'boolean') {
+              <div class="form-group">
+                <label for="units">Units (optional)</label>
+                <input type="text" id="units" formControlName="units" placeholder="Enter units (e.g. °C)" />
+              </div>
+              }
+
+              @if (fieldForm.get('fieldType')?.value === 'text') {
+              <div class="form-group">
+                <div class="flex-row-justify-start checkbox-wrapper">
+                  <input style="width:1rem;margin-right:0.4rem;" type="checkbox" id="isDropdown"
+                    formControlName="isDropdown" />
+                  <label for="isDropdown">Make this a dropdown field</label>
+                </div>
+              </div>
+              }
+
+              @if (fieldForm.get('isDropdown')?.value) {
+              <div class="dropdown-container">
+                <h4>Dropdown Options</h4>
+                <div class="dropdown-options" formArrayName="dropdownOptions">
+                  @for (option of dropdownOptions.controls; track $index) {
+                  <div class="dropdown-option">
+                    <input type="text" [formControlName]="$index" placeholder="Enter option value" />
+                    @if (dropdownOptions.length > 1) {
+                    <button type="button" class="remove-option" (click)="removeDropdownOption($index)">×</button>
+                    }
+                  </div>
+                  }
+                  <button type="button" class="add-option" (click)="addDropdownOption()">+ Add Option</button>
+                </div>
+              </div>
+              }
+
+              @if (fieldForm.get('fieldType')?.value === 'number') {
+              <div class="limits-container">
+                <h4>Number Limits (optional)</h4>
+                <div class="form-row">
+                  <div class="form-group half-width">
+                    <label for="minValue">Minimum Value</label>
+                    <input type="number" id="minValue" formControlName="minValue" placeholder="Min value" />
+                  </div>
+                  <div class="form-group half-width">
+                    <label for="maxValue">Maximum Value</label>
+                    <input type="number" id="maxValue" formControlName="maxValue" placeholder="Max value" />
+                  </div>
+                </div>
+              </div>
+              }
+
+              @if (fieldForm.get('fieldType')?.value === 'date') {
+              <div class="limits-container">
+                <h4>Date Limits (optional)</h4>
+                <div class="form-row">
+                  <div class="form-group half-width">
+                    <label for="minDate">Minimum Date</label>
+                    <input type="date" id="minDate" formControlName="minDate" />
+                  </div>
+                  <div class="form-group half-width">
+                    <label for="maxDate">Maximum Date</label>
+                    <input type="date" id="maxDate" formControlName="maxDate" />
+                  </div>
+                </div>
+              </div>
+              }
+
+              <div class="form-group">
+                <label for="defaultValue">Default Value</label>
+                <ng-container [ngSwitch]="fieldForm.get('fieldType')?.value">
+                  @switch (fieldForm.get('fieldType')?.value) {
+                  @case ('text') {
+                  <input [ngStyle]="{display: fieldForm.get('isDropdown')?.value ? 'none' : 'block'}" type="text"
+                    id="defaultValue" formControlName="defaultValue" placeholder="Enter default value" />
+                  <select [ngStyle]="{display: fieldForm.get('isDropdown')?.value ? 'block' : 'none'}" id="defaultValue"
+                    formControlName="defaultValue">
+                    <option value="">Select a default option</option>
+                    <ng-container *ngFor="let option of dropdownOptions.controls; let i = index">
+                      <option [ngValue]="option.value">{{ option.value }}</option>
+                    </ng-container>
+                  </select>
+                  }
+                  @case ('number') {
+                  <input type="number" id="defaultValue" formControlName="defaultValue"
+                    placeholder="Enter default value" />
+                  }
+                  @case ('date') {
+                  <input type="date" id="defaultValue" formControlName="defaultValue" />
+                  }
+                  @case ('boolean') {
+                  <div class="checkbox-wrapper">
+                    <input type="checkbox" id="defaultValue" formControlName="defaultValue" />
+                    <label for="defaultValue">Default Value</label>
+                  </div>
+                  }}
+                </ng-container>
+              </div>
+
+              <div class="form-group">
+                <div class="flex-row-justify-start  checkbox-wrapper">
+                  <input style="width:1rem;margin-right:0.4rem;" type="checkbox" id="isRequired"
+                    formControlName="isRequired" />
+                  <label for="isRequired">Required Field</label>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="cancel-btn" (click)="toggleAddFieldForm()">
+                  Cancel
+                </button>
+                <button type="submit" class="confirm-btn" [disabled]="fieldForm.invalid">
+                  {{ isEditMode ? 'Update Field' : 'Add Field' }}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
         }
 
         <div class="fields-container">
-          @for (fieldName of objectKeys(currentFields); track fieldName) {
+          @for (fieldName of objectKeys(currentFields); track $index) {
           <div class="field-item" [attr.data-field-name]="fieldName">
             <div class="field-header">
               <h4>{{ fieldName }}</h4>
               <div class="field-actions">
                 <button class="edit-field-btn" (click)="editField(fieldName)">
-                  Edit
+                  {{ isEditMode && editingFieldName === fieldName ? "Save" : "Edit" }}
                 </button>
                 <button class="delete-field-btn" (click)="deleteField(fieldName)">
                   Delete

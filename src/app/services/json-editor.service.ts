@@ -11,7 +11,9 @@ export class JsonEditorService {
   // Store original field for comparison
   private originalJson: any = null;
 
-  constructor() {}
+  constructor() {
+    this.loadSampleData();
+  }
 
   setJsonData(data: any): void {
     this.originalJson = JSON.parse(JSON.stringify(data)); // Create a deep copy

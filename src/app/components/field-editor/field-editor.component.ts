@@ -1,17 +1,6 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-  OnChanges,
-  SimpleChanges,
-  output,
-  input,
-  inject,
-} from '@angular/core';
+import { Component, Input, OnInit, output, input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { JsonEditorService } from '../../services/json-editor.service';
 
@@ -22,8 +11,18 @@ import { JsonEditorService } from '../../services/json-editor.service';
   templateUrl: './field-editor.component.html',
   styleUrls: ['./field-editor.component.scss'],
 })
-export class FieldEditorComponent implements OnInit, OnChanges {
-  field = input<any>({});
+export class FieldEditorComponent implements OnInit {
+  private _field: any = {};
+  @Input()
+  set field(value: any) {
+    this._field = value;
+    this.initializeFieldData();
+    // console.log('Field changed:', this.fieldName, this.fieldData);
+  }
+  get field(): any {
+    return this._field;
+  }
+
   fieldName = input<string>('');
   section = input<string>('');
   subsection = input<string | null>(null);
@@ -45,14 +44,7 @@ export class FieldEditorComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.initializeFieldData();
-    console.log('Field initialized:', this.fieldName, this.fieldData);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['field']) {
-      this.initializeFieldData();
-      console.log('Field changed:', this.fieldName, this.fieldData);
-    }
+    // console.log('Field initialized:', this.fieldName, this.fieldData);
   }
 
   private initializeFieldData(): void {
@@ -102,7 +94,7 @@ export class FieldEditorComponent implements OnInit, OnChanges {
 
     this.notifyValueChange(path, newValue);
   }
-  
+
   private updateNestedValue(path: string, value: any): void {
     const pathArr = path.split('.');
     this.updateValueAtPath(this.fieldData, pathArr, value);

@@ -452,10 +452,14 @@ export class JsonEditorComponent implements OnInit {
   }
 
   formatSectionName(name: string): string {
-    return name
+    const formatted = name
       ?.split('_')
       .map((np) => `${np.charAt(0).toUpperCase()}${np.slice(1)}`)
       .join(' ');
+      if (formatted.length > 18) {
+        return `${formatted.substring(0, 18)}...`
+      }
+      return formatted;
   }
 
   useTranslation(fieldKey: string = ''): string {

@@ -11,6 +11,8 @@
   font-family: 'Roboto', Arial, sans-serif;
   max-width: 100%;
   overflow-x: hidden;
+
+  // border: 1px solid red;
 }
 
 .upload-screen {
@@ -29,6 +31,11 @@
   border-radius: 1rem;
 }
 
+.editor-header-row {
+  display: flex;
+  flex-direction: column;
+}
+
 .editor-header {
   display: flex;
   justify-content: space-between;
@@ -37,12 +44,19 @@
   background-color: #ffffff;
   border-bottom: 1px solid #e2e8f0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+
+
   
   h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #333;
+  }
+
+  span {
+    font-size: 0.6rem;
+    font-weight: 400;
   }
   
   .editor-actions {
@@ -67,6 +81,7 @@
 }
 
 .editor-content {
+  min-height: calc(100vh - 120px);
   display: flex;
   flex: 1;
   overflow: hidden;
@@ -863,6 +878,7 @@
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
+    padding-inline: 1rem;
     cursor: pointer;
     transition: background-color 0.2s;
     

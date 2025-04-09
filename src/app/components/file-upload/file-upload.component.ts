@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JsonEditorService } from '../../services/json-editor.service';
 
@@ -10,13 +10,15 @@ import { JsonEditorService } from '../../services/json-editor.service';
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent implements OnInit {
-  @Output() fileUploaded = new EventEmitter<boolean>();
+  // @Output() fileUploaded = new EventEmitter<boolean>();
+  fileUploaded = output<boolean>()
+  jsonEditorService = inject(JsonEditorService)
 
   isLoading: boolean = false;
   errorMessage: string = '';
   isDragging: boolean = false;
 
-  constructor(private jsonEditorService: JsonEditorService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 

@@ -7,7 +7,7 @@
 
     <div class="card-body">
       <div class="upload-area" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
-        [class.active]="isDragging">
+        [class.active]="isDragging()">
         <div class="upload-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
             <path
@@ -44,18 +44,22 @@
     </div>
   </div>
 
-  <div class="loading-overlay" *ngIf="isLoading">
+  @if(isLoading()) {
+  <div class="loading-overlay">
     <div class="spinner"></div>
     <p>Processing your file...</p>
   </div>
+  }
 
-  <div class="error-popup" *ngIf="errorMessage">
+  @if (errorMessage()) {
+  <div class="error-popup">
     <div class="error-content">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
       </svg>
-      <p>{{ errorMessage }}</p>
+      <p>{{ errorMessage() }}</p>
       <button (click)="clearError()">Dismiss</button>
     </div>
   </div>
+  }
 </div>

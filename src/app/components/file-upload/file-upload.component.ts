@@ -1,4 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, output, inject } from '@angular/core';
+import {
+  Component,
+  output,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JsonEditorService } from '../../services/json-editor.service';
 
@@ -9,18 +14,15 @@ import { JsonEditorService } from '../../services/json-editor.service';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
 })
-export class FileUploadComponent implements OnInit {
-  // @Output() fileUploaded = new EventEmitter<boolean>();
-  fileUploaded = output<boolean>()
-  jsonEditorService = inject(JsonEditorService)
+export class FileUploadComponent {
+  fileUploaded = output<boolean>();
+  jsonEditorService = inject(JsonEditorService);
 
-  isLoading: boolean = false;
-  errorMessage: string = '';
-  isDragging: boolean = false;
+  isLoading = signal(false);
+  errorMessage = signal('');
+  isDragging = signal(false);
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
@@ -32,19 +34,19 @@ export class FileUploadComponent implements OnInit {
   onDragOver(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    this.isDragging = true;
+    this.isDragging.set(true);
   }
 
   onDragLeave(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    this.isDragging = false;
+    this.isDragging.set(false);
   }
 
   onDrop(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    this.isDragging = false;
+    this.isDragging.set(false);
 
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
@@ -52,7 +54,7 @@ export class FileUploadComponent implements OnInit {
       if (file.type === 'application/json' || file.name.endsWith('.json')) {
         this.processFile(file);
       } else {
-        this.errorMessage = 'Please upload a JSON file.';
+        this.errorMessage.set('Please upload a JSON file.');
       }
     }
   }
@@ -62,8 +64,8 @@ export class FileUploadComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
-    this.errorMessage = '';
+    this.isLoading.set(true);
+    this.errorMessage.set('');
 
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -72,16 +74,17 @@ export class FileUploadComponent implements OnInit {
         this.jsonEditorService.setJsonData(json);
         this.fileUploaded.emit(true);
       } catch (error) {
-        this.errorMessage =
-          'Invalid JSON file. Please check the format and try again.';
+        this.errorMessage.set(
+          'Invalid JSON file. Please check the format and try again.'
+        );
       } finally {
-        this.isLoading = false;
+        this.isLoading.set(false);
       }
     };
 
     reader.onerror = () => {
-      this.errorMessage = 'Error reading the file. Please try again.';
-      this.isLoading = false;
+      this.errorMessage.set('Error reading the file. Please try again.');
+      this.isLoading.set(false);
     };
 
     reader.readAsText(file);
@@ -89,13 +92,13 @@ export class FileUploadComponent implements OnInit {
 
   private isValidFile(file: File): boolean {
     if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
-      this.errorMessage = 'Please upload a JSON file.';
+      this.errorMessage.set('Please upload a JSON file.');
       return false;
     }
 
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
-      this.errorMessage = 'File size exceeds 5MB limit.';
+      this.errorMessage.set('File size exceeds 5MB limit.');
       return false;
     }
 
@@ -103,22 +106,22 @@ export class FileUploadComponent implements OnInit {
   }
 
   loadSampleData(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
+    this.isLoading.set(true);
+    this.errorMessage.set('');
 
     setTimeout(() => {
       try {
         this.jsonEditorService.loadSampleData();
         this.fileUploaded.emit(true);
       } catch (error) {
-        this.errorMessage = 'Error loading sample data. Please try again.';
+        this.errorMessage.set('Error loading sample data. Please try again.');
       } finally {
-        this.isLoading = false;
+        this.isLoading.set(false);
       }
     }, 500); // Simulate loading for better UX
   }
 
   clearError(): void {
-    this.errorMessage = '';
+    this.errorMessage.set('');
   }
 }

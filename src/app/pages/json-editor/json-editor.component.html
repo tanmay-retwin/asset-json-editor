@@ -1,11 +1,11 @@
 <div class="json-editor-container">
-  @if (!fileUploaded) {
+  @if (!fileUploaded()) {
   <div class="file-upload-container">
     <app-file-upload (fileUploaded)="onFileUploaded($event)"></app-file-upload>
   </div>
   }
 
-  @if (fileUploaded) {
+  @if (fileUploaded()) {
   <div class="editor-container">
     <div class="editor-header">
       <div class="editor-header-row">
@@ -26,7 +26,7 @@
           </button>
         </div>
 
-        @if(showAddSectionForm) {
+        @if(showAddSectionForm()) {
         <div class="add-form">
           <h3>Add New Section</h3>
           <form [formGroup]="sectionForm" (ngSubmit)="addNewSection()">
@@ -46,23 +46,23 @@
         }
 
         <ul class="sections-list">
-          @for (section of sections; track section) {
-          <li [class.active]="section === activeSection" (click)="selectSection(section)">
+          @for (section of sections(); track section) {
+          <li [class.active]="section === activeSection()" (click)="selectSection(section)">
             {{ formatSectionName(section) }}
           </li>
           }
         </ul>
       </div>
 
-      @if (activeSection) {
+      @if (activeSection()) {
       <div class="section-content">
         <div class="section-header">
-          <h3>{{ formatSectionName(activeSection) }}</h3>
+          <h3>{{ formatSectionName(activeSection()) }}</h3>
           <div class="section-actions">
             <button class="add-field-btn" (click)="toggleAddFieldForm()">
               Add Field
             </button>
-            @if (sections.length > 1) {
+            @if (sections().length > 1) {
             <button class="delete-section-btn" (click)="deleteSection()">
               Delete Section
             </button>
@@ -70,16 +70,16 @@
           </div>
         </div>
 
-        @if (showAddFieldForm) {
+        @if (showAddFieldForm()) {
         <div class="add-field-form-c">
           <div class="add-form add-field-form">
-            <h3>{{ isEditMode ? 'Edit Field' : 'Add New Field' }}</h3>
+            <h3>{{ isEditMode() ? 'Edit Field' : 'Add New Field' }}</h3>
             <form [formGroup]="fieldForm" (ngSubmit)="saveField()">
               <div class="form-group">
                 <label for="fieldName">Field Name</label>
                 <input type="text" id="fieldName" formControlName="fieldName"
-                  placeholder="Enter field name (e.g. temperature)" [readonly]="isEditMode"
-                  [class.disabled]="isEditMode" />
+                  placeholder="Enter field name (e.g. temperature)" [readonly]="isEditMode()"
+                  [class.disabled]="isEditMode()" />
               </div>
 
               <div class="form-group">
@@ -180,9 +180,9 @@
                   <select [ngStyle]="{display: fieldForm.get('isDropdown')?.value ? 'block' : 'none'}" id="defaultValue"
                     formControlName="defaultValue">
                     <option value="">Select a default option</option>
-                    <ng-container *ngFor="let option of dropdownOptions.controls; let i = index">
-                      <option [ngValue]="option.value">{{ option.value }}</option>
-                    </ng-container>
+                    @for (option of dropdownOptions.controls; track $index) {
+                    <option [ngValue]="option.value">{{ option.value }}</option>
+                    }
                   </select>
                   }
                   @case ('number') {
@@ -214,7 +214,7 @@
                   Cancel
                 </button>
                 <button type="submit" class="confirm-btn" [disabled]="fieldForm.invalid">
-                  {{ isEditMode ? 'Update Field' : 'Add Field' }}
+                  {{ isEditMode() ? 'Update Field' : 'Add Field' }}
                 </button>
               </div>
             </form>
@@ -223,21 +223,21 @@
         }
 
         <div class="fields-container">
-          @for (fieldName of objectKeys(currentFields); track $index) {
+          @for (fieldName of objectKeys(currentFields()); track $index) {
           <div class="field-item" [attr.data-field-name]="fieldName">
             <div class="field-header">
               <h4>{{ formatSectionName(fieldName) }}</h4>
               <div class="field-actions">
                 <button class="edit-field-btn" (click)="editField(fieldName)">
-                  {{ isEditMode && editingFieldName === fieldName ? "Save" : "Edit" }}
+                  {{ isEditMode() && editingFieldName() === fieldName ? "Save" : "Edit" }}
                 </button>
                 <button class="delete-field-btn" (click)="deleteField(fieldName)">
                   Delete
                 </button>
               </div>
             </div>
-            <app-field-editor [field]="currentFields[fieldName]" [fieldName]="fieldName" [section]="activeSection"
-              [subsection]="null" [isEditing]="isEditMode && editingFieldName === fieldName" />
+            <app-field-editor [field]="currentFields()[fieldName]" [fieldName]="fieldName" [section]="activeSection()"
+              [subsection]="null" [isEditing]="isEditMode() && editingFieldName() === fieldName" />
           </div>
           }
         </div>

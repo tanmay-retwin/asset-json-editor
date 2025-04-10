@@ -1,4 +1,13 @@
-import { Component, Input, OnInit, output, input, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  output,
+  input,
+  inject,
+  signal,
+  effect,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -11,18 +20,19 @@ import { JsonEditorService } from '../../services/json-editor.service';
   templateUrl: './field-editor.component.html',
   styleUrls: ['./field-editor.component.scss'],
 })
-export class FieldEditorComponent implements OnInit {
-  private _field: any = {};
-  @Input()
-  set field(value: any) {
-    this._field = value;
-    this.initializeFieldData();
-    // console.log('Field changed:', this.fieldName, this.fieldData);
-  }
-  get field(): any {
-    return this._field;
-  }
+export class FieldEditorComponent {
+  // private _field: any = {};
+  // @Input()
+  // set field(value: any) {
+  //   this._field = value;
+  //   this.initializeFieldData();
+  //   // console.log('Field changed:', this.fieldName, this.fieldData);
+  // }
+  // get field(): any {
+  //   return this._field;
+  // }
 
+  field = input<any>({});
   fieldName = input<string>('');
   section = input<string>('');
   subsection = input<string | null>(null);
@@ -32,47 +42,48 @@ export class FieldEditorComponent implements OnInit {
   jsonEditorService = inject(JsonEditorService);
 
   // Field data for editing and display
-  fieldData: any = {};
+  fieldData = signal<any>({});
 
   // State handling
-  value: any;
-  fieldType: string = 'text';
-  isDropdown: boolean = false;
-  formattedDate: string = '';
+  value = signal<any>(null);
+  fieldType = signal('text');
+  isDropdown = signal(false);
+  formattedDate = signal('');
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.initializeFieldData();
-    // console.log('Field initialized:', this.fieldName, this.fieldData);
+  constructor() {
+    effect(() => {
+      const fieldValue = this.field();
+      this.initializeFieldData(fieldValue);
+    });
   }
 
-  private initializeFieldData(): void {
-    this.fieldData = { ...this.field };
+  private initializeFieldData(fieldValue: any): void {
+    this.fieldData = { ...fieldValue };
 
     if (
-      !this.fieldData.limits &&
-      (this.fieldData.datatype === 'number' ||
-        this.fieldData.datatype === 'date')
+      !this.fieldData().limits &&
+      (this.fieldData().datatype === 'number' ||
+        this.fieldData().datatype === 'date')
     ) {
-      this.fieldData.limits = { min: null, max: null };
+      this.fieldData().limits = { min: null, max: null };
     }
 
-    if (!this.fieldData.dropdown && this.fieldData.datatype === 'text') {
-      this.fieldData.dropdown = [];
+    if (!this.fieldData().dropdown && this.fieldData().datatype === 'text') {
+      this.fieldData().dropdown = [];
     }
 
     this.value =
-      this.fieldData?.default !== undefined ? this.fieldData.default : '';
-    this.fieldType = this.fieldData?.datatype || 'text';
+      this.fieldData?.().default !== undefined ? this.fieldData().default : '';
+    this.fieldType = this.fieldData?.().datatype || 'text';
 
-    this.isDropdown =
-      !!this.fieldData?.dropdown &&
-      Array.isArray(this.fieldData.dropdown) &&
-      this.fieldData.dropdown.length > 0;
+    this.isDropdown.set(
+      !!this.fieldData?.().dropdown &&
+        Array.isArray(this.fieldData().dropdown) &&
+        this.fieldData().dropdown.length > 0
+    );
 
-    if (this.fieldType === 'date' && this.value) {
-      this.formattedDate = this.formatDateForInput(this.value);
+    if (this.fieldType() === 'date' && this.value) {
+      this.formattedDate.set(this.formatDateForInput(this.value()));
     }
   }
 
@@ -83,9 +94,9 @@ export class FieldEditorComponent implements OnInit {
     let newValue: any = target.value;
 
     // Type conversion based on field type
-    if (this.fieldType === 'number') {
+    if (this.fieldType() === 'number') {
       newValue = target.value === '' ? null : parseFloat(target.value);
-    } else if (this.fieldType === 'boolean') {
+    } else if (this.fieldType() === 'boolean') {
       newValue = (target as HTMLInputElement).checked;
     }
 
@@ -139,8 +150,8 @@ export class FieldEditorComponent implements OnInit {
         this.updateNestedValue(path, isoString);
 
         if (path === 'default') {
-          this.value = isoString;
-          this.formattedDate = dateString;
+          this.value.set(isoString);
+          this.formattedDate.set(dateString);
         }
 
         // Notify service of the change
@@ -177,25 +188,25 @@ export class FieldEditorComponent implements OnInit {
   }
 
   addDropdownOption(): void {
-    if (!this.fieldData.dropdown) {
-      this.fieldData.dropdown = [];
+    if (!this.fieldData().dropdown) {
+      this.fieldData().dropdown = [];
     }
-    this.fieldData.dropdown.push('');
+    this.fieldData().dropdown.push('');
     this.updateFieldData();
   }
 
   removeDropdownOption(index: number): void {
     if (
-      this.fieldData.dropdown &&
+      this.fieldData().dropdown &&
       index >= 0 &&
-      index < this.fieldData.dropdown.length
+      index < this.fieldData().dropdown.length
     ) {
-      this.fieldData.dropdown.splice(index, 1);
+      this.fieldData().dropdown.splice(index, 1);
       this.updateFieldData();
     }
   }
 
-  useTranslation(fieldKey: string = ""): string {
+  useTranslation(fieldKey: string = ''): string {
     return this.jsonEditorService.useTranslation(fieldKey);
   }
 }

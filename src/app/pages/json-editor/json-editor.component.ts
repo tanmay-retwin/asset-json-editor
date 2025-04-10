@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -23,25 +23,25 @@ import { JsonEditorService } from '../../services/json-editor.service';
   templateUrl: './json-editor.component.html',
   styleUrls: ['./json-editor.component.scss'],
 })
-export class JsonEditorComponent implements OnInit {
+export class JsonEditorComponent {
   // service injection
   jsonEditorService = inject(JsonEditorService);
 
   // File upload state
-  fileUploaded = false;
+  fileUploaded = signal(true);
 
   // Tab management
-  sections: string[] = [];
-  activeSection: string = '';
+  sections = signal<string[]>([]);
+  activeSection = signal('');
 
   // Field management
-  currentFields: any = {};
+  currentFields = signal<any>({});
 
   // Form states
-  showAddSectionForm: boolean = false;
-  showAddFieldForm: boolean = false;
-  isEditMode: boolean = false;
-  editingFieldName: string = '';
+  showAddSectionForm = signal(false);
+  showAddFieldForm = signal(false);
+  isEditMode = signal(false);
+  editingFieldName = signal('');
 
   // Reactive forms
   sectionForm!: FormGroup;
@@ -49,6 +49,18 @@ export class JsonEditorComponent implements OnInit {
 
   constructor() {
     this.initForms();
+    effect(() => {
+      const data = this.jsonEditorService.jsonData();
+      if (data) {
+        // console.log(data);
+        // this.makeFileUploadedTrue();
+        this.loadSections();
+      }
+    });
+  }
+
+  makeFileUploadedTrue(): void {
+    this.fileUploaded.set(true);
   }
 
   initForms(): void {
@@ -111,27 +123,18 @@ export class JsonEditorComponent implements OnInit {
     return Object.keys(obj || {});
   }
 
-  ngOnInit(): void {
-    this.jsonEditorService.jsonData$.subscribe((data) => {
-      if (data) {
-        this.fileUploaded = true;
-        this.loadSections();
-      }
-    });
-  }
-
   loadSections(): void {
-    this.sections = this.jsonEditorService.getSections();
+    this.sections.set(this.jsonEditorService.getSections());
     if (this.sections.length > 0 && !this.activeSection) {
-      this.selectSection(this.sections[0]);
+      this.selectSection(this.sections()[0]);
     }
   }
 
   selectSection(section: string): void {
-    this.activeSection = section;
+    this.activeSection.set(section);
     this.loadSectionFields(section);
-    this.showAddFieldForm = false;
-    this.showAddSectionForm = false;
+    this.showAddFieldForm.set(false);
+    this.showAddSectionForm.set(false);
   }
 
   loadSectionFields(section: string): void {
@@ -139,10 +142,10 @@ export class JsonEditorComponent implements OnInit {
   }
 
   toggleAddSectionForm(): void {
-    this.showAddSectionForm = !this.showAddSectionForm;
-    this.showAddFieldForm = false;
+    this.showAddSectionForm.update((prev) => !prev);
+    this.showAddFieldForm.set(false);
 
-    if (this.showAddSectionForm) {
+    if (this.showAddSectionForm()) {
       this.sectionForm.reset({ sectionName: '' });
     }
   }
@@ -165,7 +168,7 @@ export class JsonEditorComponent implements OnInit {
       this.jsonEditorService.setJsonData(currentData);
       this.loadSections();
       this.selectSection(sectionName);
-      this.showAddSectionForm = false;
+      this.showAddSectionForm.set(false);
       this.sectionForm.reset();
     } else {
       alert('Section name already exists.');
@@ -173,11 +176,11 @@ export class JsonEditorComponent implements OnInit {
   }
 
   toggleAddFieldForm(): void {
-    this.showAddFieldForm = !this.showAddFieldForm;
-    this.showAddSectionForm = false;
-    this.isEditMode = false;
+    this.showAddFieldForm.update((prev) => !prev);
+    this.showAddSectionForm.set(false);
+    this.isEditMode.set(false);
 
-    if (this.showAddFieldForm) {
+    if (this.showAddFieldForm()) {
       this.fieldForm.reset({
         fieldType: 'text',
         isRequired: false,
@@ -230,20 +233,20 @@ export class JsonEditorComponent implements OnInit {
   }
 
   editField(fieldName: string): void {
-    const field = this.currentFields[fieldName];
+    const field = this.currentFields()[fieldName];
     if (!field) return;
 
-    if (this.isEditMode && this.editingFieldName === fieldName) {
+    if (this.isEditMode && this.editingFieldName() === fieldName) {
       // save conditions
-      this.isEditMode = false;
-      this.editingFieldName = '';
-      this.showAddFieldForm = false;
+      this.isEditMode.set(false);
+      this.editingFieldName.set('');
+      this.showAddFieldForm.set(false);
       return;
     }
 
-    this.isEditMode = true;
-    this.editingFieldName = fieldName;
-    this.showAddFieldForm = false;
+    this.isEditMode.set(true);
+    this.editingFieldName.set(fieldName);
+    this.showAddFieldForm.set(false);
 
     // Reset dropdown options
     this.resetDropdownOptions();
@@ -380,31 +383,31 @@ export class JsonEditorComponent implements OnInit {
       }
     }
 
-    if (this.isEditMode) {
+    if (this.isEditMode()) {
       this.jsonEditorService.deleteField(
-        this.activeSection,
+        this.activeSection(),
         null,
-        this.editingFieldName
+        this.editingFieldName()
       );
     }
 
     this.jsonEditorService.addField(
-      this.activeSection,
+      this.activeSection(),
       null,
       fieldName,
       fieldTemplate
     );
 
-    this.loadSectionFields(this.activeSection);
-    this.showAddFieldForm = false;
-    this.isEditMode = false;
-    this.editingFieldName = '';
+    this.loadSectionFields(this.activeSection());
+    this.showAddFieldForm.set(false);
+    this.isEditMode.set(false);
+    this.editingFieldName.set('');
   }
 
   deleteField(fieldName: string): void {
     if (confirm(`Are you sure you want to delete field "${fieldName}"?`)) {
-      this.jsonEditorService.deleteField(this.activeSection, null, fieldName);
-      this.loadSectionFields(this.activeSection);
+      this.jsonEditorService.deleteField(this.activeSection(), null, fieldName);
+      this.loadSectionFields(this.activeSection());
     }
   }
 
@@ -419,15 +422,15 @@ export class JsonEditorComponent implements OnInit {
       )
     ) {
       const currentData = this.jsonEditorService.getJsonData();
-      delete currentData.sections[this.activeSection];
+      delete currentData.sections[this.activeSection()];
       this.jsonEditorService.setJsonData(currentData);
 
       this.loadSections();
       if (this.sections.length > 0) {
-        this.selectSection(this.sections[0]);
+        this.selectSection(this.sections()[0]);
       } else {
-        this.activeSection = '';
-        this.currentFields = {};
+        this.activeSection.set('');
+        this.currentFields.set({});
       }
     }
   }
@@ -445,7 +448,7 @@ export class JsonEditorComponent implements OnInit {
   }
 
   onFileUploaded(success: boolean): void {
-    this.fileUploaded = success;
+    this.fileUploaded.set(success);
     if (success) {
       this.loadSections();
     }
@@ -456,10 +459,10 @@ export class JsonEditorComponent implements OnInit {
       ?.split('_')
       .map((np) => `${np.charAt(0).toUpperCase()}${np.slice(1)}`)
       .join(' ');
-      if (formatted.length > 18) {
-        return `${formatted.substring(0, 18)}...`
-      }
-      return formatted;
+    if (formatted.length > 18) {
+      return `${formatted.substring(0, 18)}...`;
+    }
+    return formatted;
   }
 
   useTranslation(fieldKey: string = ''): string {

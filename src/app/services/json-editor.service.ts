@@ -12,7 +12,7 @@ export class JsonEditorService {
   private originalJson: any = null;
 
   constructor() {
-    this.loadSampleData();
+    // this.loadSampleData();
   }
 
   getTranslationObj() {

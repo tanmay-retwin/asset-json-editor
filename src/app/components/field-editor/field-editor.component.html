@@ -1,9 +1,9 @@
 <div class="field-editor" [ngClass]="fieldData()?.datatype">
   <div class="field-editor-content">
     <div class="field-label">
-      <span class="display-name">{{ useTranslation(fieldData().field_name || fieldName()) }}</span>
+      <span class="display-name">{{ useTranslation(fieldData()?.field_name || fieldName()) }}</span>
       @if (fieldData()?.units) {
-      <span class="units">({{ useTranslation(fieldData().units) }})</span>
+      <span class="units">({{ useTranslation(fieldData()?.units) }})</span>
       }
       @if (fieldData()?.required) {
       <span class="required-badge">Required</span>
@@ -12,42 +12,42 @@
 
     <div class="field-input">
       @if (fieldData()?.datatype === 'text' && fieldData()?.dropdown?.length == 0) {
-      <input type="text" [value]="fieldData().default || ''" (input)="updateFieldValue($event)" class="text-input"
+      <input type="text" [value]="fieldData()?.default || ''" (input)="updateFieldValue($event)" class="text-input"
         placeholder="Enter text value" />
       }
 
       @if (fieldData()?.datatype === 'text' && isArray(fieldData()?.dropdown) && fieldData()?.dropdown?.length > 0) {
-      <select [value]="fieldData().default || ''" (change)="updateFieldValue($event)" class="dropdown-input">
-        <option value="" disabled selected *ngIf="!fieldData().default">Select an option</option>
-        <option *ngFor="let option of fieldData().dropdown" [value]="option"
-          [selected]="option === fieldData().default">
+      <select [value]="fieldData()?.default || ''" (change)="updateFieldValue($event)" class="dropdown-input">
+        <option value="" disabled selected *ngIf="!fieldData()?.default">Select an option</option>
+        <option *ngFor="let option of fieldData()?.dropdown" [value]="option"
+          [selected]="option === fieldData()?.default">
           {{ option }}
         </option>
       </select>
       }
 
-      @if (fieldData().datatype === 'number') {
+      @if (fieldData()?.datatype === 'number') {
       <input type="number"
-        [value]="fieldData().default !== undefined && fieldData().default !== null ? fieldData().default : ''"
-        (input)="updateFieldValue($event)" class="number-input" [min]="fieldData().limits?.min"
-        [max]="fieldData().limits?.max" placeholder="Enter numeric value" />
+        [value]="fieldData()?.default !== undefined && fieldData()?.default !== null ? fieldData()?.default : ''"
+        (input)="updateFieldValue($event)" class="number-input" [min]="fieldData()?.limits?.min"
+        [max]="fieldData()?.limits?.max" placeholder="Enter numeric value" />
       }
 
-      @if (fieldData().datatype === 'date') {
-      <input type="date" [value]="formatDateForInput(fieldData().default)" (input)="updateDateField($event)"
-        class="date-input" [min]="fieldData().limits?.min ? (formatDateForInput(fieldData().limits.min)) : ''"
-        [max]="fieldData().limits?.max ? (formatDateForInput(fieldData().limits.max)) : ''" />
+      @if (fieldData()?.datatype === 'date') {
+      <input type="date" [value]="formatDateForInput(fieldData()?.default)" (input)="updateDateField($event)"
+        class="date-input" [min]="fieldData()?.limits?.min ? (formatDateForInput(fieldData()?.limits?.min)) : ''"
+        [max]="fieldData()?.limits?.max ? (formatDateForInput(fieldData()?.limits?.max)) : ''" />
       }
 
-      @if (fieldData().datatype === 'boolean') {
+      @if (fieldData()?.datatype === 'boolean') {
       <div class="boolean-field-wrapper">
         <label class="toggle-switch">
-          <input type="checkbox" [checked]="fieldData().default === true || fieldData().default === 'true'"
+          <input type="checkbox" [checked]="fieldData()?.default === true || fieldData()?.default === 'true'"
             (change)="updateFieldValue($event)" />
           <span class="toggle-slider"></span>
         </label>
         <span class="boolean-value">
-          {{ (fieldData().default === true || fieldData().default === 'true') ? 'Yes' : 'No'}}
+          {{ (fieldData()?.default === true || fieldData()?.default === 'true') ? 'Yes' : 'No'}}
         </span>
       </div>
       }
@@ -55,7 +55,7 @@
 
     @if (fieldData()?.description) {
     <div class="field-description">
-      {{ useTranslation(fieldData().description) }}
+      {{ useTranslation(fieldData()?.description) }}
     </div>
     }
   </div>
@@ -65,7 +65,7 @@
 <div class="field-settings">
   <div class="form-group">
     <label for="dataType">Data Type</label>
-    <select id="dataType" [(ngModel)]="fieldData().datatype" (change)="updateFieldData()">
+    <select id="dataType" [(ngModel)]="datatype" (change)="updateFieldData()">
       <option value="text">Text</option>
       <option value="number">Number</option>
       <option value="boolean">Boolean</option>
@@ -78,132 +78,133 @@
 
   <div class="form-group checkbox-group">
     <div class="checkbox-wrapper">
-      <input style="margin-right: 0.4rem;" type="checkbox" id="required" [(ngModel)]="fieldData().required"
+      <input style="margin-right: 0.4rem;" type="checkbox" id="required" [(ngModel)]="required"
         (change)="updateFieldData()">
       <label for="required">Required</label>
     </div>
   </div>
 
-  @if (fieldData().datatype === 'text') {
+  @if (fieldData()?.datatype === 'text') {
   <div class="form-group">
     <label for="defaultValue">Default Value</label>
-    <input type="text" id="defaultValue" [(ngModel)]="fieldData().default" (blur)="updateFieldData()">
+    <input type="text" id="defaultValue" [(ngModel)]="default" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="field_name">Field Name</label>
-    <input type="text" id="field_name" [(ngModel)]="fieldData().field_name" (blur)="updateFieldData()">
+    <input type="text" id="field_name" [(ngModel)]="field_name" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="description">Description</label>
-    <input type="text" id="description" [(ngModel)]="fieldData().description" (blur)="updateFieldData()">
+    <input type="text" id="description" [(ngModel)]="description" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="units">Units</label>
-    <input type="text" id="units" [(ngModel)]="fieldData().units" (blur)="updateFieldData()">
+    <input type="text" id="units" [(ngModel)]="units" (blur)="updateFieldData()">
   </div>
 
   <!-- Dropdown Options -->
-  @if (fieldData().dropdown) {
+  @if (fieldData()?.dropdown) {
   <div class="form-group">
     <label>Dropdown Options</label>
     <div class="dropdown-options">
-      <div class="dropdown-option" *ngFor="let option of fieldData().dropdown; let i = index">
-        <input type="text" [(ngModel)]="fieldData().dropdown[i]" (blur)="updateFieldData()">
-        <button class="remove-option" (click)="removeDropdownOption(i)">×</button>
+      @for (option of dropdown; track $index) {
+      <div class="dropdown-option">
+        <input type="text" [ngModel]="option" (ngModelChange)="setDropdown($index, $event)" (blur)="updateFieldData()">
+        <button class="remove-option" (click)="removeDropdownOption($index)">×</button>
       </div>
+      }
       <button class="add-option" (click)="addDropdownOption()">+ Add Option</button>
     </div>
   </div>
+
   }
   }
 
-  @if (fieldData().datatype === 'number') {
+  @if (fieldData()?.datatype === 'number') {
   <div class="form-group">
     <label for="defaultNumberValue">Default Value</label>
-    <input type="number" id="defaultNumberValue" [(ngModel)]="fieldData().default" (blur)="updateFieldData()">
+    <input type="number" id="defaultNumberValue" [(ngModel)]="default" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="field_name">Field Name</label>
-    <input type="text" id="field_name" [(ngModel)]="fieldData().field_name" (blur)="updateFieldData()">
+    <input type="text" id="field_name" [(ngModel)]="field_name" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="description">Description</label>
-    <input type="text" id="description" [(ngModel)]="fieldData().description" (blur)="updateFieldData()">
+    <input type="text" id="description" [(ngModel)]="description" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="units">Units</label>
-    <input type="text" id="units" [(ngModel)]="fieldData().units" (blur)="updateFieldData()">
+    <input type="text" id="units" [(ngModel)]="units" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="minValue">Minimum Value</label>
-    <input type="number" id="minValue" [(ngModel)]="fieldData().limits.min" (blur)="updateFieldData()">
+    <input type="number" id="minValue" [(ngModel)]="limitsMin" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="maxValue">Maximum Value</label>
-    <input type="number" id="maxValue" [(ngModel)]="fieldData().limits.max" (blur)="updateFieldData()">
+    <input type="number" id="maxValue" [(ngModel)]="limitsMax" (blur)="updateFieldData()">
   </div>
   }
 
-  @if (fieldData().datatype === 'date') {
+  @if (fieldData()?.datatype === 'date') {
   <div class="form-group">
     <label for="defaultDateValue">Default Value</label>
-    <input type="date" id="defaultDateValue" [value]="formatDateForInput(fieldData().default)"
+    <input type="date" id="defaultDateValue" [value]="formatDateForInput(fieldData()?.default)"
       (input)="updateDateField($event)" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="field_name">Field Name</label>
-    <input type="text" id="field_name" [(ngModel)]="fieldData().field_name" (blur)="updateFieldData()">
+    <input type="text" id="field_name" [(ngModel)]="field_name" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="description">Description</label>
-    <input type="text" id="description" [(ngModel)]="fieldData().description" (blur)="updateFieldData()">
+    <input type="text" id="description" [(ngModel)]="description" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="units">Units</label>
-    <input type="text" id="units" [(ngModel)]="fieldData().units" (blur)="updateFieldData()">
+    <input type="text" id="units" [(ngModel)]="units" (blur)="updateFieldData()">
   </div>
-
   <div class="form-group">
     <label for="minDate">Minimum Date</label>
     <input type="date" id="minDate"
-      [value]="fieldData().limits?.min ? (formatDateForInput(fieldData().limits.min)) : ''"
+      [value]="fieldData()?.limits?.min ? (formatDateForInput(fieldData()?.limits?.min)) : ''"
       (input)="updateDateField($event, 'limits.min')" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="maxDate">Maximum Date</label>
     <input type="date" id="maxDate"
-      [value]="fieldData().limits?.max ? (formatDateForInput(fieldData().limits.max)) : ''"
+      [value]="fieldData()?.limits?.max ? (formatDateForInput(fieldData()?.limits?.max)) : ''"
       (input)="updateDateField($event, 'limits.max')" (blur)="updateFieldData()">
   </div>
   }
 
-  @if (fieldData().datatype === 'boolean') {
+  @if (fieldData()?.datatype === 'boolean') {
   <div class="form-group">
     <label for="defaultBooleanValue">Default Value</label>
-    <input type="checkbox" id="defaultBooleanValue" [(ngModel)]="fieldData().default"
-      (change)="updateFieldValue($event)">
+    <input type="checkbox" id="defaultBooleanValue" [(ngModel)]="default" (change)="updateFieldValue($event)">
   </div>
 
   <div class="form-group">
     <label for="field_name">Field Name</label>
-    <input type="text" id="field_name" [(ngModel)]="fieldData().field_name" (blur)="updateFieldData()">
+    <input type="text" id="field_name" [(ngModel)]="field_name" (blur)="updateFieldData()">
   </div>
 
   <div class="form-group">
     <label for="description">Description</label>
-    <input type="text" id="description" [(ngModel)]="fieldData().description" (blur)="updateFieldData()">
+    <input type="text" id="description" [(ngModel)]="description" (blur)="updateFieldData()">
   </div>
   }
 </div>

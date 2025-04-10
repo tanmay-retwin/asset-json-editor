@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormGroup,
@@ -28,7 +28,7 @@ export class JsonEditorComponent {
   jsonEditorService = inject(JsonEditorService);
 
   // File upload state
-  fileUploaded = signal(true);
+  fileUploaded = signal(false);
 
   // Tab management
   sections = signal<string[]>([]);
@@ -48,19 +48,13 @@ export class JsonEditorComponent {
   fieldForm!: FormGroup;
 
   constructor() {
-    this.initForms();
-    effect(() => {
-      const data = this.jsonEditorService.jsonData();
+    this.jsonEditorService.jsonData$.subscribe((data) => {
       if (data) {
-        // console.log(data);
-        // this.makeFileUploadedTrue();
+        this.fileUploaded.set(true);
         this.loadSections();
       }
     });
-  }
-
-  makeFileUploadedTrue(): void {
-    this.fileUploaded.set(true);
+    this.initForms();
   }
 
   initForms(): void {
@@ -125,7 +119,7 @@ export class JsonEditorComponent {
 
   loadSections(): void {
     this.sections.set(this.jsonEditorService.getSections());
-    if (this.sections.length > 0 && !this.activeSection) {
+    if (this.sections().length > 0 && !this.activeSection()) {
       this.selectSection(this.sections()[0]);
     }
   }
@@ -138,7 +132,7 @@ export class JsonEditorComponent {
   }
 
   loadSectionFields(section: string): void {
-    this.currentFields = this.jsonEditorService.getFieldsInSection(section);
+    this.currentFields.set(this.jsonEditorService.getFieldsInSection(section));
   }
 
   toggleAddSectionForm(): void {
@@ -236,7 +230,7 @@ export class JsonEditorComponent {
     const field = this.currentFields()[fieldName];
     if (!field) return;
 
-    if (this.isEditMode && this.editingFieldName() === fieldName) {
+    if (this.isEditMode() && this.editingFieldName() === fieldName) {
       // save conditions
       this.isEditMode.set(false);
       this.editingFieldName.set('');
@@ -412,7 +406,7 @@ export class JsonEditorComponent {
   }
 
   deleteSection(): void {
-    if (!this.activeSection || this.sections.length <= 1) {
+    if (!this.activeSection() || this.sections().length <= 1) {
       return;
     }
 
@@ -426,7 +420,7 @@ export class JsonEditorComponent {
       this.jsonEditorService.setJsonData(currentData);
 
       this.loadSections();
-      if (this.sections.length > 0) {
+      if (this.sections().length > 0) {
         this.selectSection(this.sections()[0]);
       } else {
         this.activeSection.set('');

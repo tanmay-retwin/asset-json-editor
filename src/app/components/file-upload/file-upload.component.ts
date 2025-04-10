@@ -10,7 +10,6 @@ import { JsonEditorService } from '../../services/json-editor.service';
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent {
-  // @Output() fileUploaded = new EventEmitter<boolean>();
   fileUploaded = output<boolean>();
   jsonEditorService = inject(JsonEditorService);
 
